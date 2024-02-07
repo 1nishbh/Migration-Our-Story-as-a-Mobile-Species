@@ -13,9 +13,12 @@ jupyter: python3
 
 # Introduction
 
-Migration seems to be emanating from the bluprint of our existence. At the dawn of civilization, ancestors moved from one continent to another ...
+Migration seems to be ingrained in the bluprint of our existence. From the dawn of our species, humans have migrated from Africa to Asia to Eurasia to America. Early ancestors moved from places to places in search of better habitats and food. The pattern of migration not only ensured the survival of our species with through suitable climate and food but also changed the behaviors and lifestyle of our species as a whole. The hunter-gatherers tribe settled into agricultural societies, and there are several revolutionary tranformations to the structures of our society that can be ascribed to migration--rise and fall of kingdoms, industrial revolution, displacement of indegenous population, to mention some. 
+
+
 
 # Dataset
+
 
 [In this section, desribe the dataset(s). This includes things like where you
 obtained the dataset. Include a full citation, as specified 
