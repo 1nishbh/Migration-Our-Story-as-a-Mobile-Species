@@ -9,16 +9,27 @@ number-sections: true
 format:
   pdf: default
 jupyter: python3
+execute: 
+  echo: false
 ---
 
 # Introduction
 
-Migration seems to be ingrained in the bluprint of our existence. From the dawn of our species, humans have migrated from Africa to Asia to Eurasia to America. Early ancestors moved from places to places in search of better habitats and food. The pattern of migration not only ensured the survival of our species with through suitable climate and food but also changed the behaviors and lifestyle of our species as a whole. The hunter-gatherers tribe settled into agricultural societies, and there are several revolutionary tranformations to the structures of our society that can be ascribed to migration--rise and fall of kingdoms, industrial revolution, displacement of indegenous population, to mention some. 
-
-
+Migration seems to be ingrained in the bluprint of our existence. From the dawn of our species, humans have migrated from Africa to Asia to Eurasia to America. Early ancestors moved from places to places in search of better habitats and food. The pattern of migration not only ensured the survival of our species with through suitable climate and food but also changed the behaviors and lifestyle of our species as a whole. The hunter-gatherers tribe settled into agricultural societies, and there are several revolutionary tranformations to the structures of our society that can be ascribed to migration--rise and fall of kingdoms, industrial revolution, displacement of indegenous population, changes in the population charactristics (gender, religion, age groups), to mention some. While the nature of migration and its consequences have changed along with times, it is important that the patterns of migration are scrutunized to understand the socio-economic drivers of migration. This project will study the mobility of human from different countries across two different decades, 2000-2010 and 2010-2020. As stated before, humans have always been mobile species, but the motives have evolved over time. So it will also be equally important to shed the driving force of migration, rather than bluntly mentioned the statistics. In order to achieve this aim, this project will look migration patterns through the lenses of economy, war, epidemics, and human rights.
 
 # Dataset
 
+The datasets that will be used to study the drivers and pattern of migration will be obtained from "Organization of Economic Cooperation and Development (OECD)" and "The Global Knowledge Partnership on Migration and Development (KNOMAD)". The datasets from OECD will contain the measurements of migrations in different countries across 2002-2022 where as KNOMAD's datasets will contain the capital outflows and inflows from a specific country. 
+
+The brief overlook of all the datasets will be presented below:
+
+**Migration Datasets**
+
+```{python}
+import pandas as pd
+migration = pd.read_csv("/Users/nischal/Library/CloudStorage/GoogleDrive-nbhanda1@ramapo.edu/My Drive/undergrad/spring 2024/capstone/data/inflows of foreign population by nationality.csv", low_memory=False)
+migration.head()
+```
 
 [In this section, desribe the dataset(s). This includes things like where you
 obtained the dataset. Include a full citation, as specified 
@@ -116,6 +127,8 @@ week. The remaining time will be used for writing up and presenting your results
 * Blog post revisions (2 hours)
 * Peer feedback (2 hours)
 * [Do not schedule any other tasks for this week.]
+
+## Citations
 
 ## Some cool Quarto stuff
 
