@@ -33,6 +33,9 @@ migration = pd.read_csv("/Users/nischal/Library/CloudStorage/GoogleDrive-nbhanda
 ```{python}
 migration.info()
 ```
+
+![Migration Dataview](/Users/nischal/Desktop/migration_inflows_dataview.png)
+
 ```{python}
 from itables import show
 show(migration.head(), searching = False, ordering = False)
