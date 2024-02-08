@@ -168,6 +168,9 @@ week. The remaining time will be used for writing up and presenting your results
 
 # References
 
-1. OECD. (n.d.). Migration Statistics. International Migration Database. https://stats.oecd.org/Index.aspx?DataSetCode=MIG 
+1. OECD. (n.d.). Migration Statistics. International Migration Database. 
+https://stats.oecd.org/Index.aspx?DataSetCode=MIG 
 2. World Bank. (n.d.). Remittances. KNOMAD. https://www.knomad.org/data/remittances 
-3. Ratha, D. (2019, February 5). Remittances: Funds for the Folks Back Home. IMF. https://www.imf.org/en/Publications/fandd/issues/Series/Back-to-Basics/Remittances#:~:text=When%20migrants%20send%20home%20part,as%20workers%27%20or%20migrant%20remittances. 
+3. Ratha, D. (2019, February 5). Remittances: Funds for the Folks Back Home. IMF. 
+https://www.imf.org/en/Publications/fandd/issues/Series/Back-to-Basics/Remittances#:~:text=When%20migrants%20send%20home%20part,
+as%20workers%27%20or%20migrant%20remittances. 
