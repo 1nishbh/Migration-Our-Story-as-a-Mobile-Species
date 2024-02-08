@@ -24,16 +24,10 @@ The datasets that will be used to study the drivers and pattern of migration wil
 The brief overlook of all the datasets will be presented below:
 
 **Migration Datasets**
-```{r}
-library(reticulate)
-use_virtualenv("r-reticulate", required = TRUE)
-py_install(c("pandas", "IPython", "tabulate"))
-```
+
 ```{python}
 import pandas as pd
 migration = pd.read_csv("/Users/nischal/Library/CloudStorage/GoogleDrive-nbhanda1@ramapo.edu/My Drive/undergrad/spring 2024/capstone/data/inflows of foreign population by nationality.csv", low_memory=False)
-
-migration.head()
 ```
 
 ```{python}
@@ -46,6 +40,7 @@ show(migration.head(), searching = False, ordering = False)
 
 The other data that will used for the purspoe of study is remittance database. The remittance are in two categories: i. capital money outflowing a country into a foreign country and ii. capital gains of a country from abroad.
 
+**remittance** 
 
 ```{python}
 inward_remittance = pd.read_excel("/Users/nischal/Library/CloudStorage/GoogleDrive-nbhanda1@ramapo.edu/My Drive/undergrad/spring 2024/capstone/data/inward_remittance_flows_december_2023_1.xlsx")
