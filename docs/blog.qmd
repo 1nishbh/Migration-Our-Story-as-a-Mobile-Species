@@ -1,7 +1,7 @@
 ---
 title: "Migration"
 subtitle: "Spring 2024"
-author: "Prof. Yuster"
+author: "Nischal Bhandari"
 bibliography: references.bib
 number-sections: false
 format:
@@ -14,8 +14,6 @@ format:
   pdf: default
 jupyter: python3
 ---
-
-# Welcome
 
 **Migration** seems to be ingrained in the blueprint of our existence. From the dawn of our species, humans have migrated from Africa to Asia to Eurasia to America. Early ancestors moved from places to places in search of better habitats and food. Migration not only ensured the survival of our species through suitable climate and food but also changed the behaviors and lifestyle of our species as a whole. The hunter-gatherers tribe settled into agricultural soci- eties, and there are several other revolutionary transformations to the structures of our society that can be ascribed to migration–rise and fall of kingdoms, industrial revolution, displace- ment of indigenous population, changes in the population characteristics (gender, religion, age groups), to mention some. 
 
@@ -48,6 +46,13 @@ flows_cleaned = flows.drop(columns=['Flag Codes', 'Flags'])
 flows_cleaned.head()
 ```
 
+The remittance data looks like the following @fig-polar
+```{python}
+import pandas as pd
+remitance = pd.read_excel("../data/outward-remittance-flows-brief-39-december-2023-revised-as-of-mar.8-2024_1.xlsx", header = 1, index_col= None)
+remitance = remitance.dropna()
+remitance.head()
+```
 **Welcome** to *my* ~~super~~ SUPER awesome `blog` post!
 $$x^2 = 1$$
 
