@@ -53,6 +53,7 @@ remitance = pd.read_excel("../data/outward-remittance-flows-brief-39-december-20
 remitance = remitance.dropna()
 remitance.head()
 ```
+
 **Welcome** to *my* ~~super~~ SUPER awesome `blog` post!
 $$x^2 = 1$$
 
