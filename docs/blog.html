@@ -180,7 +180,7 @@ window.Quarto = {
 <p>The datasets that will be used to study the migration dynamics will be obtained from “Organization of Economic Cooperation and Development (OECD)” and “The Global Knowledge Partnership on Migration and Development (KNOMAD)”. The <a href="https://stats.oecd.org/Index.aspx?DataSetCode=MIG">dataset</a> from OECD will contain the migration rate–record as the number of individuals migrating from one country to another–across 2000-2022 where as <a href="https://www.knomad.org/data/remittances">KNOMAD’s datasets</a> will contain the capital outflows from and inflows of a specific country.</p>
 <p>The OECD dataset has measures of inflows and outflows of foreign population for a country. The measures are based on population registers, residence and/or work permits, and estimation from surveys.</p>
 <p>The general view of the the data in OECD dataset is shown in <a href="#fig-polar" class="quarto-xref">Figure&nbsp;1</a>.</p>
-<div id="ab6486d9" class="cell" data-execution_count="1">
+<div id="d6f57529" class="cell" data-execution_count="1">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb1"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -295,8 +295,8 @@ window.Quarto = {
 </div>
 </div>
 </div>
-<p>The remittance data looks like the following <a href="#fig-polar" class="quarto-xref">Figure&nbsp;1</a></p>
-<div id="69c7310c" class="cell" data-execution_count="2">
+<p>The remittance data looks like the following <a href="#fig-polar" class="quarto-xref">Figure&nbsp;1</a>.</p>
+<div id="f30fbf96" class="cell" data-execution_count="2">
 <details class="code-fold">
 <summary>Code</summary>
 <div class="sourceCode cell-code" id="cb2"><pre class="sourceCode python code-with-copy"><code class="sourceCode python"><span id="cb2-1"><a href="#cb2-1" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
@@ -1024,14 +1024,14 @@ window.document.addEventListener("DOMContentLoaded", function (event) {
 <span id="cb4-48"><a href="#cb4-48" aria-hidden="true" tabindex="-1"></a>flows_cleaned.head()</span>
 <span id="cb4-49"><a href="#cb4-49" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
 <span id="cb4-50"><a href="#cb4-50" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>The remittance data looks like the following @fig-polar</span>
+<span id="cb4-51"><a href="#cb4-51" aria-hidden="true" tabindex="-1"></a>The remittance data looks like the following @fig-polar.</span>
 <span id="cb4-54"><a href="#cb4-54" aria-hidden="true" tabindex="-1"></a><span class="in">```{python}</span></span>
 <span id="cb4-55"><a href="#cb4-55" aria-hidden="true" tabindex="-1"></a><span class="im">import</span> pandas <span class="im">as</span> pd</span>
 <span id="cb4-56"><a href="#cb4-56" aria-hidden="true" tabindex="-1"></a>remitance <span class="op">=</span> pd.read_excel(<span class="st">"../data/outward-remittance-flows-brief-39-december-2023-revised-as-of-mar.8-2024_1.xlsx"</span>, header <span class="op">=</span> <span class="dv">1</span>, index_col<span class="op">=</span> <span class="va">None</span>)</span>
 <span id="cb4-57"><a href="#cb4-57" aria-hidden="true" tabindex="-1"></a>remitance <span class="op">=</span> remitance.dropna()</span>
 <span id="cb4-58"><a href="#cb4-58" aria-hidden="true" tabindex="-1"></a>remitance.head()</span>
-<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a></span>
-<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-59"><a href="#cb4-59" aria-hidden="true" tabindex="-1"></a><span class="in">```</span></span>
+<span id="cb4-60"><a href="#cb4-60" aria-hidden="true" tabindex="-1"></a></span>
 <span id="cb4-61"><a href="#cb4-61" aria-hidden="true" tabindex="-1"></a>**Welcome** to *my* ~~super~~ SUPER awesome <span class="in">`blog`</span> post!</span>
 <span id="cb4-62"><a href="#cb4-62" aria-hidden="true" tabindex="-1"></a>$$x^2 = 1$$</span>
 <span id="cb4-63"><a href="#cb4-63" aria-hidden="true" tabindex="-1"></a></span>

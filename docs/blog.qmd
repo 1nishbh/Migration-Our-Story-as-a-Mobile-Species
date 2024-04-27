@@ -46,7 +46,7 @@ flows_cleaned = flows.drop(columns=['Flag Codes', 'Flags'])
 flows_cleaned.head()
 ```
 
-The remittance data looks like the following @fig-polar
+The remittance data looks like the following @fig-polar.
 ```{python}
 import pandas as pd
 remitance = pd.read_excel("../data/outward-remittance-flows-brief-39-december-2023-revised-as-of-mar.8-2024_1.xlsx", header = 1, index_col= None)
