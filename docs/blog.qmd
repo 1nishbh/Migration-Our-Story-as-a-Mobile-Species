@@ -17,6 +17,10 @@ jupyter: python3
 
 **Migration** seems to be ingrained in the blueprint of our existence. From the dawn of our species, humans have migrated from Africa to Asia to Eurasia to America. Early ancestors moved from places to places in search of better habitats and food. Migration not only ensured the survival of our species through suitable climate and food but also changed the behaviors and lifestyle of our species as a whole. The hunter-gatherers tribe settled into agricultural soci- eties, and there are several other revolutionary transformations to the structures of our society that can be ascribed to migration–rise and fall of kingdoms, industrial revolution, displace- ment of indigenous population, changes in the population characteristics (gender, religion, age groups), to mention some. 
 
+:::{.callout-note}
+Migration simply said is the movement of people in and out of a place. At a given time, a specific place might be seeing inflows of new and outflows of old population simultaneously.
+:::
+
 ![Source: Ramapo College of New Jersey](https://store.laphamsquarterly.us/media/310.jpg){fig-alt="A photo of the arch at Ramapo College."}
 
 While the nature of migration and its consequences have changed along with times, it is important that the patterns of migration are scrutinized to understand the socioeconomic drivers of migration. This project will study the mobility of human from different countries across two different decades, 2000-2010 and 2010-2020. As stated before, humans have always been mobile species, but the motives have evolved over time. So it will also be equally important to shed light on the driving forces of migration, rather than bluntly mentioning the statistics. In order to achieve this aim, this project will look migration patterns through the lenses of economy, war, epidemics, and human rights.
@@ -28,9 +32,11 @@ The [dataset](https://stats.oecd.org/Index.aspx?DataSetCode=MIG) from OECD will 
 
 The OECD dataset has measures of inflows and outflows of foreign population for a country. The measures are based on population registers, residence and/or work permits, and estimation from surveys.
 
-The general view of the the data in OECD dataset is shown in @fig-polar.
+The general view of the the data in OECD dataset is shown in the following table.
 
 ```{python}
+#| label: tbl-Migration
+#| tbl-cap: Migration Flows
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -46,13 +52,93 @@ flows_cleaned = flows.drop(columns=['Flag Codes', 'Flags'])
 flows_cleaned.head()
 ```
 
-The remittance data looks like the following @fig-polar.
+The remittance data looks like the following table.
 ```{python}
+#| label: tbl-Remittance
+#| tbl-cap: "Remittance Flows"
 import pandas as pd
 remitance = pd.read_excel("../data/outward-remittance-flows-brief-39-december-2023-revised-as-of-mar.8-2024_1.xlsx", header = 1, index_col= None)
 remitance = remitance.dropna()
 remitance.head()
 ```
+
+# Results
+
+### Emigrating Population
+
+Emigrating population can be defined as the population that is leaving their native country and is moving into a new country. The reasons and motive for such ouflow can be severals, inclduing employment opportunities, political conflicts, refuge seekers, and so on. 
+
+```{python}
+inflows_cleaned = flows_cleaned[flows_cleaned['Variable'] == 'Inflows of foreign population by nationality']
+inflows_cleaned = inflows_cleaned[inflows_cleaned['Country of birth/nationality'] != "Total"]
+fig = px.choropleth(
+    data_frame=inflows_cleaned.groupby(['COU', 'Year', "Country"], as_index=False)['Value'].sum(),
+    locations="COU",
+    animation_frame="Year",
+    animation_group = "COU",
+    color="Value",
+    title="Inflows of Foreign Population",
+    color_continuous_scale="Viridis",
+    projection="equirectangular", 
+    labels={"Value": "Migration Value"},
+    hover_name="Country",
+    template="ggplot2",
+)
+
+fig.show()
+```
+
+### Naturalization
+
+
+
+### Returning Population
+```{python}
+outflows_cleaned = flows_cleaned[flows_cleaned['Variable'] == 'Outflows of foreign population by nationality']
+outflows_cleaned = outflows_cleaned[outflows_cleaned['Country of birth/nationality'] != "Total"]
+fig = px.choropleth(
+    data_frame=outflows_cleaned.groupby(['Country of birth/nationality', 'CO2', 'Year'], as_index=False)['Value'].sum(),
+    locations="CO2",
+    animation_frame="Year",
+    animation_group="CO2",
+    color="Value",
+    title="Return of Native Population",
+    color_continuous_scale="Viridis",
+    projection="natural earth",
+    labels={"Value": "Total Migration Value"},
+    hover_name="Country of birth/nationality",
+    template="plotly",
+)
+
+fig.show()
+```
+
+It would be even more interesting to see the directions of movements among people.
+
+
+::: {#fig-flows}
+
+<iframe width="560" height="700" src="migration_lines_overtime.html"></iframe>
+
+Flows
+:::
+
+![2020](top_10_migration_inflows_2020.png)
+
+### Remittance
+
+
+
+### Sentiments
+
+
+
+### Clustering
+
+
+
+
+
 
 **Welcome** to *my* ~~super~~ SUPER awesome `blog` post!
 $$x^2 = 1$$
