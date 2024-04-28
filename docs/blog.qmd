@@ -236,9 +236,8 @@ outflows_2000_2020 = outflows_2000_2020[outflows_2000_2020['CO2'] != 'TOT'].sort
 outflows_2000_2020 = outflows_2000_2020.groupby(['Country of birth/nationality', 'Country'])['Value'].sum().reset_index(name='Total Return')
 top_10__return = outflows_2000_2020.nlargest(12, "Total Return")
 ```
-Returning population in 2020
 
-![Retuning 2020](.png)
+
 ```{python}
 import plotly.graph_objects as go
 
