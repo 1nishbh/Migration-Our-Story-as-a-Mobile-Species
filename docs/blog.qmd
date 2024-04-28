@@ -17,11 +17,12 @@ jupyter: python3
 
 **Migration** seems to be ingrained in the blueprint of our existence. From the dawn of our species, humans have migrated from Africa to Asia to Eurasia to America. Early ancestors moved from places to places in search of better habitats and food. Migration not only ensured the survival of our species through suitable climate and food but also changed the behaviors and lifestyle of our species as a whole. The hunter-gatherers tribe settled into agricultural soci- eties, and there are several other revolutionary transformations to the structures of our society that can be ascribed to migration–rise and fall of kingdoms, industrial revolution, displace- ment of indigenous population, changes in the population characteristics (gender, religion, age groups), to mention some. 
 
+![Source: Lapham's Quarterly](blog_image_header.png){fig-alt="A research poster depicting the great migrations in human history." fig-align="left" width=220%}
+
 :::{.callout-note}
 Migration simply said is the movement of people in and out of a place. At a given time, a specific place might be seeing inflows of new and outflows of old population simultaneously.
 :::
 
-![Source: Ramapo College of New Jersey](https://store.laphamsquarterly.us/media/310.jpg){fig-alt="A photo of the arch at Ramapo College."}
 
 While the nature of migration and its consequences have changed along with times, it is important that the patterns of migration are scrutinized to understand the socioeconomic drivers of migration. This project will study the mobility of human from different countries across two different decades, 2000-2010 and 2010-2020. As stated before, humans have always been mobile species, but the motives have evolved over time. So it will also be equally important to shed light on the driving forces of migration, rather than bluntly mentioning the statistics. In order to achieve this aim, this project will look migration patterns through the lenses of economy, war, epidemics, and human rights.
 
@@ -88,8 +89,103 @@ fig = px.choropleth(
 fig.show()
 ```
 
+It would be even more interesting to see the directions of movements among people.
+
+
+![2020](top_10_migration_inflows_2020.png)
+
+European nations mostly see continental migrations while other nations seem to have cross-continental migration. 
+
+Rather than just focusing in the year 2020, seeing the total inflows over time might be better to see the trend as well:
+
+```{python}
+mean_inflows_10 = inflows_cleaned[inflows_cleaned['Year'] <= 2020]
+mean_inflows_10 = mean_inflows_10[mean_inflows_10['CO2'] != 'Total']
+# mean_inflows_10 = inflows_10
+mean_inflows_10 = mean_inflows_10.groupby(['Country of birth/nationality', 'Country'])['Value'].sum().reset_index(name='Total Migration')
+
+# some countries have larget moving populations moving to different locations, so 16 and not 10
+top_10_mean_inflows = mean_inflows_10.nlargest(16, "Total Migration")
+# sorting them in descending order
+sorted_top_10_mean_inflows = top_10_mean_inflows.sort_values('Total Migration', ascending=False)
+fig = px.parallel_categories(
+    data_frame=sorted_top_10_mean_inflows,
+    dimensions=['Country of birth/nationality', 'Country'],
+    color='Total Migration',
+    color_continuous_scale=px.colors.sequential.Viridis,
+    labels={
+        'Country of birth/nationality': 'Birth Country',
+        'Country': 'Destination Country'
+    }
+)
+fig.update_layout(
+    title="Top 10 Population Leaving their Birth Country in 2000-2020",
+    title_x=0.5,
+    coloraxis_colorbar=dict(x=1.1),
+    margin=dict(l=100, t = 80) # adjust margins on the left and top
+)
+fig.show()
+```
+
+
+
+It might a good idea to explore the change in emigrating population overtime. While analyzing it for every country in the dataset can be hectic and overwhelming, limiting the research to top destinations can be revealing to the general trend among migrants.
+
+```{python}
+top_countries = ["United States", "Korea", "Japan", "Germany", "Italy", "Canada"]
+inflows_top_countries = inflows_cleaned[inflows_cleaned['Country'].isin(top_countries)]
+
+import seaborn as sns
+import matplotlib.pyplot as plt
+
+plt.figure(figsize=(8, 5))
+sns.set(style="whitegrid")
+
+sns.lineplot(data=inflows_top_countries, x="Year", y="Value", hue="Country", estimator=sum, errorbar=None, marker="o", markersize=8, linewidth=2)
+
+plt.title("Total Inflows of Foreign Population", fontsize=16)
+plt.xlabel("Years", fontsize=14)
+plt.ylabel("Total Migrants Inflows", fontsize=14)
+
+plt.grid(True, linestyle="--", alpha=0.7)
+
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+
+
+plt.legend(title="Country", title_fontsize='14', loc='upper left')
+
+plt.tight_layout()
+plt.show()
+```
+
 ### Naturalization
 
+```{python}
+data = pd.read_csv("../data/inflows of foreign population by nationality.csv", low_memory=False)
+nationality_acquisition = data[data['Variable'] == "Acquisition of nationality by country of former nationality"]
+
+nationality_acquisition_mean = nationality_acquisition.groupby(['YEA', 'Country'])['Value'].sum().groupby('YEA', group_keys=False).nlargest(5).reset_index()
+fig = px.line(nationality_acquisition_mean, x='YEA', y='Value', color='Country', title='Total Naturalization of Foreign Poupulations')
+fig.update_layout(
+    legend_title_text='Country Granting Citizenship',
+    legend_title_font=dict(size=12),
+    plot_bgcolor = 'white', 
+    title_x = 0.5
+)
+fig.update_xaxes(title_text='Year')
+fig.update_yaxes(title_text='Total Acquisition of Nationality')
+fig.show()
+```
+
+what about just in 20201?
+
+```{python}
+nationality_acquisition_2021 = nationality_acquisition[(nationality_acquisition['YEA'] == 2021) & (nationality_acquisition['CO2'] != "TOT")]
+top_10_acquisition = nationality_acquisition_2021.nlargest(10, columns = "Value")
+fig = px.bar(top_10_acquisition, x='Country', y='Value', color='Country of birth/nationality', title='Acquisition of Nationality by Foreign Population in 2020')
+fig.show()
+```
 
 
 ### Returning Population
@@ -113,17 +209,122 @@ fig = px.choropleth(
 fig.show()
 ```
 
-It would be even more interesting to see the directions of movements among people.
+Return Population in 2020 (with lines)
+
+![2020](top_10_migration_returns_2020.png)
+
+Within a continental movements see higher return. For instance, in 2020, ....
 
 
-::: {#fig-flows}
+```{python}
+# total from 2000 - 2020
+outflows_2000_2020 = outflows_cleaned[outflows_cleaned['Year'] <= 2020]
+outflows_2000_2020 = outflows_2000_2020[outflows_2000_2020['CO2'] != 'TOT'].sort_values('Value', ascending=False)
 
-<iframe width="560" height="700" src="migration_lines_overtime.html"></iframe>
+# total migration
+outflows_2000_2020 = outflows_2000_2020.groupby(['Country of birth/nationality', 'Country'])['Value'].sum().reset_index(name='Total Return')
+top_10__return = outflows_2000_2020.nlargest(12, "Total Return")
+```
+Returning population in 2020
 
-Flows
-:::
+![Retuning 2020](.png)
+```{python}
+import plotly.graph_objects as go
 
-![2020](top_10_migration_inflows_2020.png)
+def plot_migration_arc_diagram_mean_inflows(data, top_n=10):
+
+    filtered_data = data
+
+    nodes = list(set(filtered_data['Country of birth/nationality']).union(set(filtered_data['Country'])))
+
+    links = []
+    for _, row in filtered_data.iterrows():
+        links.append({'source': row['Country'], 'target': row['Country of birth/nationality'], 'value': row['Total Return']})
+
+    fig = go.Figure(data=[
+        go.Sankey(
+            node=dict(
+                pad=15,
+                thickness=20,
+                line=dict(color="black", width=0.5),
+                label=nodes
+            ),
+            link=dict(
+                source=[nodes.index(link['source']) for link in links],
+                target=[nodes.index(link['target']) for link in links],
+                value=[link['value'] for link in links]
+            )
+        )
+    ])
+
+    fig.update_layout(title=f"Top {top_n} Population Return in 2000-2020", title_x=0.5)  # Center the title
+
+    fig.update_layout(
+        annotations=[
+            dict(
+                x=0.0,
+                y=1.0,
+                xref='paper',
+                yref='paper',
+                text='Temporary Residence',
+                showarrow=False,
+                font=dict(
+                    size=16,
+                    color='black'
+                )
+            ),
+            dict(
+                x=1.0,
+                y=1.1,
+                xref='paper',
+                yref='paper',
+                text='Birth Country',
+                showarrow=False,
+                font=dict(
+                    size=16,
+                    color='black'
+                )
+            )
+        ]
+    )
+
+    fig.show()
+    
+
+
+plot_migration_arc_diagram_mean_inflows(top_10__return)
+
+```
+
+
+Continental population are some of the highly returning population compared to the cross-continental movements even some of such cross-continental are in the top 10 moving populations.
+
+Trend in top returning population
+
+```{python}
+top_countries = ['China', 'Poland', 'Romania', 'Italy', 'India', 'Mexico']
+outlfows_top_countries = outflows_cleaned[outflows_cleaned['Country of birth/nationality'].isin(top_countries)]
+
+# plotting a graph
+plt.figure(figsize=(8, 5))
+sns.set(style="whitegrid")
+
+
+sns.lineplot(data=outlfows_top_countries, x="Year", y="Value", hue="Country of birth/nationality", estimator=sum, errorbar = None, marker="o", markersize=8, linewidth=2)
+
+plt.title("Total Return of Population", fontsize=16)
+plt.xlabel("Years", fontsize=14)
+plt.ylabel("Total Returning Population", fontsize=14)
+
+plt.grid(True, linestyle="--", alpha=0.7)
+
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+plt.legend(title="Country", title_fontsize='14', loc='upper left')
+plt.tight_layout()
+plt.show()
+```
+
 
 ### Remittance
 
@@ -136,6 +337,18 @@ Flows
 ### Clustering
 
 
+
+
+
+
+## Additional Figures
+
+::: {#fig-flows}
+
+<iframe width="560" height="700" src="migration_lines_overtime.html"></iframe>
+
+Flows
+:::
 
 
 
