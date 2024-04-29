@@ -67,9 +67,12 @@ remitance.head()
 
 ### Emigrating Population
 
-Emigrating population can be defined as the population that is leaving their native country and is moving into a new country. The reasons and motive for such ouflow can be severals, inclduing employment opportunities, political conflicts, refuge seekers, and so on. The datasets we are using in this project does not have comprehensive information to study for the migration of people, but we will later look into employment opportunities in countries that recieve highest number of emigrants. Other reasons can also be empirically implied based on the conditions at the time of migration in their former residence. For instance, we can expect a bigger number of population leaving a country with ongoing war or political conflcts. First, let's see the general trend in emigrating population. The @fig-polar shows the total number of foreign people arriving in a destination (for instance, United States) over time. 
+Emigrating population can be defined as the population that is leaving their native country and is moving into a new country. The reasons and motive for such ouflow can be severals, inclduing employment opportunities, political conflicts, refuge seekers, and so on. The datasets we are using in this project does not have comprehensive information to study for the migration of people, but we will later look into employment opportunities in countries that recieve highest number of emigrants. Other reasons can also be empirically implied based on the conditions at the time of migration in their former residence. For instance, we can expect a bigger number of population leaving a country with ongoing war or political conflcts. First, let's see the general trend in emigrating population. The @fig-inflows shows the total number of foreign people arriving in a destination (for instance, United States) over time. 
 
 ```{python}
+
+#| label: fig-inflows
+#| fig-cap: "Migration Flows"
 inflows_cleaned = flows_cleaned[flows_cleaned['Variable'] == 'Inflows of foreign population by nationality']
 inflows_cleaned = inflows_cleaned[inflows_cleaned['Country of birth/nationality'] != "Total"]
 fig = px.choropleth(
@@ -89,17 +92,19 @@ fig = px.choropleth(
 fig.show()
 ```
 
-This figure does not indicate where all these moving population originate from. The figure only shows the total number of immigrants arriving at a destination in a given year. So it would be even more interesting to see where are these populations arrriving from. In @fig-polar, for brevity and effective communication of information in a compact graph, we will focus only on the top 20 movements in 2020. 
+This figure does not indicate where all these moving population originate from. The figure only shows the total number of immigrants arriving at a destination in a given year. So it would be even more interesting to see where are these populations arrriving from. In @fig-2020in, for brevity and effective communication of information in a compact graph, we will focus only on the top 20 movements in 2020. 
 
-![2020](top_10_migration_inflows_2020.png)
+![2020](top_10_migration_inflows_2020.png){#fig-2020in}
 
 The above figure shows a very interesting trend in Europe. Germany tends to be the favorite destination among many European nations (Bulgaria, Italy, Romania, Crotia, Poland). There is a large movement from Ukrain to Poland as well. Syrian populations from west Asia also migrate to Germany in the above graph. The migration from Syria might be the cause of civil wars within the country, but other migrations within the European nations might also be due to the open borders among Schengen nations. 
 
 While European nations mostly see continental migrations, other destinations seem to have cross-continental migration. People from India are migrating to US and Canada in 2020. Populations from China also migrate into the US. Spain receives population from Morocco and Brazil while Portugal from Colombia. There are contintation migrations in other continents as well (Mexico to USA, Venezuala to Chile, Chine to Korea and Japan, Viet Nam to Japan), but they are not as consisten as in Europe (see additional figure).
 
-Rather than just focusing in the year 2020, seeing the total inflows over time might be better to see the trend as well. The aggregate of top 10 moving population will be visualized with their origin and destination country in the @fig-polar.
+Rather than just focusing in the year 2020, seeing the total inflows over time might be better to see the trend as well. The aggregate of top 10 moving population will be visualized with their origin and destination country in the @fig-fig-topmeans.
 
 ```{python}
+#| label: fig-topmeans
+#| fig-cap: "Top Mean Inflows of Population"
 mean_inflows_10 = inflows_cleaned[inflows_cleaned['Year'] <= 2020]
 mean_inflows_10 = mean_inflows_10[mean_inflows_10['CO2'] != 'Total']
 # mean_inflows_10 = inflows_10
@@ -131,9 +136,11 @@ fig.show()
 
 As the figure suggests, Germany and US are the top destinations for many moving populations. As was seen in 2020, the top moving populations are very similar on average in 2000-2022 period. So it can be assumed the dynamics between these countries will continue in the future as well, disregarding any unprecendented events like wars.
 
-At this point, after exploring the top emigrating populations and destinations, we might assume that the total migration into these destination have increased over time. So it might a good idea to test our assumption about the change in emigrating population overtime in top destionations. The change in total inflows is depicted for United States, Korea, Japan, Germany, Italy, and Canada in @fig-polar.
+At this point, after exploring the top emigrating populations and destinations, we might assume that the total migration into these destination have increased over time. So it might a good idea to test our assumption about the change in emigrating population overtime in top destionations. The change in total inflows is depicted for United States, Korea, Japan, Germany, Italy, and Canada in @fig-fig-overtime.
 
 ```{python}
+#| label: fig-overtime
+#| fig-cap: "Inflows Over Time"
 top_countries = ["United States", "Korea", "Japan", "Germany", "Italy", "Canada"]
 inflows_top_countries = inflows_cleaned[inflows_cleaned['Country'].isin(top_countries)]
 
@@ -163,12 +170,79 @@ plt.show()
 
 There is no stark differences in total inflows over time among these contries expect in Germany. During 2015, there is a large inflows of foreign population compared to the previous years. According to a research, this was attributed to European refugee crisis "when the flow of migrants increased dramatically from 153,000 in 2008 to more than 1 million in 2015. This was mainly due to the growing number of Syrians, Iraqis, Libyans, Afghans and Eritreans fleeing war, ethnic conflict or economic hardship" [1] https://doi.org/10.1371%2Fjournal.pone.0284390 
 
-#### Employment Among Foreingn-born Population
+#### Employment Among Non-native Population
+
+One of the reason people move from one place/country to another is to seek employment opportunities. Without being employed, on the other hand, it might not be possible for an individual to survive in a new economy too. @Fig shows the employment rate among non-native population based on their education level.
+
+```{python}
+employment_by_place_edu = pd.read_csv("../data/MIG_EMP_EDUCATION_22022024161838929.csv")
+employment_by_place_edu = employment_by_place_edu.drop(columns=employment_by_place_edu.columns[[12, 13, 15, 16]])
+
+
+unwanted_values = ['Total', 'European Union (27 countries)', 'European Union (28 countries)']
+employment_by_place_edu = employment_by_place_edu[~employment_by_place_edu['Educational attainment'].isin(unwanted_values)]
+
+employment_by_place_edu = employment_by_place_edu.sort_values(by='Value', ascending=False)
+
+```
+
+
+```{python}
+employment_by_year = employment_by_place_edu[employment_by_place_edu['BIRTH'] != "NB"].groupby(['Year', 'Educational attainment'])['Value'].mean().reset_index()
+
+plt.figure(figsize=(12, 6))
+
+high_employment_rate = employment_by_year[employment_by_year['Educational attainment'] == "High"]
+medium_employment_rate = employment_by_year[employment_by_year['Educational attainment'] == "Medium"]
+low_employment_rate = employment_by_year[employment_by_year['Educational attainment'] == "Low"]
+
+plt.plot(high_employment_rate['Year'], high_employment_rate['Value'], marker='o', label='Highly Educated')
+plt.plot(medium_employment_rate['Year'], medium_employment_rate['Value'], marker='o', label='Moderately Educated')
+plt.plot(low_employment_rate['Year'], low_employment_rate['Value'], marker='o', label='Low Educated')
+
+plt.ylim(0) 
+plt.title('Foreign Born Employment Rates by Educational Attainment in OECD COuntries')
+plt.xlabel('Year')
+plt.ylabel('Employment Rate')
+plt.grid(True)
+plt.legend()
+plt.show()
+```
+
+@fig shows the employment rate based on their genders over time.
+
+```{python}
+employment_by_gender_birth = pd.read_csv("../data/employment_birth_sex.csv")
+employment_by_gender_birth['Country'] = employment_by_gender_birth['Country'].str.strip()
+
+# just filtering OECD rates
+OECD_total = employment_by_gender_birth[employment_by_gender_birth['Country'] != "OECD - Total"]
+
+#plotting the emp rate
+plt.figure(figsize=(12, 6))
+
+male_employment_rate = OECD_total[(OECD_total['RATE'] == "N_RATE") & (OECD_total['Gender'] == 'Men') & (OECD_total['BIRTH'] == 'FB')]
+male_employment_rate = male_employment_rate.groupby('Year')['Value'].mean()
+plt.plot(male_employment_rate.index, male_employment_rate.values, marker='o', label='Male Employment Rate')
+
+female_employment_rate = OECD_total[(OECD_total['RATE'] == "N_RATE") & (OECD_total['Gender'] == 'Women') & (OECD_total['BIRTH'] == 'FB')]
+female_employment_rate = female_employment_rate.groupby('Year')['Value'].mean()
+plt.plot(female_employment_rate.index, female_employment_rate.values, marker='o', label='Female Employment Rate')
+
+plt.ylim(0) 
+plt.title('Foreign Born Male and Female Employment Rates In OECD Countries')
+plt.xlabel('Year')
+plt.ylabel('Employment Rate')
+plt.grid(True)
+plt.legend()
+plt.savefig('../results/employment_rates_among_FB_gender.png', dpi=300, bbox_inches='tight')
+plt.show()
+```
 
 
 #### Naturalization
 
-When we talk about the migrants, naturalization is also part of a conversation. Naturalization is a process by wich a non-national citizen acquires the nationality of a certain country. The @fig-polar shows the top five countries granting nationality over time. We have line graphs for eight countries, which means that five of these eight countries are the top five grantees of nationality in any given year from 2000-2022.
+When we talk about the migrants, naturalization is also part of a conversation. Naturalization is a process by wich a non-national citizen acquires the nationality of a certain country. The @fig- shows the top five countries granting nationality over time. We have line graphs for eight countries, which means that five of these eight countries are the top five grantees of nationality in any given year from 2000-2022.
 
 ```{python}
 data = pd.read_csv("../data/inflows of foreign population by nationality.csv", low_memory=False)
@@ -187,7 +261,7 @@ fig.update_yaxes(title_text='Total Acquisition of Nationality')
 fig.show()
 ```
 
-It can be seen in the figure that there are no drastic changes in the trend of naturalization among non-native populations except in US. For instance, in 2003, the total numbers of naturalization falls compared to 2002. Similarly, the rate increase from 2007 to 2008 and decreases from 2008-2010. Rather than just highlighting the trend of naturalization over time, it also begs attention to see which population are seeking naturalization in a given year. The @fig-polar studies this for the year 2021.
+It can be seen in the figure that there are no drastic changes in the trend of naturalization among non-native populations except in US. For instance, in 2003, the total numbers of naturalization falls compared to 2002. Similarly, the rate increase from 2007 to 2008 and decreases from 2008-2010. Rather than just highlighting the trend of naturalization over time, it also begs attention to see which population are seeking naturalization in a given year. The @fig- studies this for the year 2021.
 
 
 ```{python}
@@ -198,6 +272,7 @@ fig.show()
 ```
 
 The graph shows the top 10 non-native population seeking nationality in different destinations. Multiple nationalites including India, China, Mexico, Phillipines, Cuba, and Dominican Republic seek naturalization in US. Other countries do not have multiple large non-native populations seeking nationality. Syrian migrants were on of the top 10 populations acquiring nationality, and they were naturalized in Netherlands and Sweden. Moroccan migrants were naturalized in Spain and Indians also gained nationaloty in Australia in 2021. The data collected for 2021 might be incomplete or even unrepresentative of the general phenomenon due to the COVID-19 pandemic. 
+
 
 ### Returning Population
 ```{python}
@@ -338,17 +413,263 @@ plt.show()
 
 ### Remittance
 
+One of the often overlooked characteristics of migration is remittance. Remittance, in this context, is defined as the sum of money sent by a person working abroad back to their birth country. 
 
+The @fig shows the top 10 nations recieving money from their citizens working abroad. This is consistend with emigrating population as well. India, Mexico, and China were top moving populations during 2000-2020.
+
+```{python}
+# remittance inward flow
+
+remit_inward = pd.read_excel("../data/inward_remittance_flows_december_2023_1.xlsx")
+
+#calculate mean remittance
+remit_inward['Mean Remittance'] = remit_inward.iloc[:, 1:-1].mean(axis=1)
+
+# exclude groups of nations to focus on individual countries
+remit_inward = remit_inward[(remit_inward['Remittance inflows (US$ million)'] != 'World') & 
+                             (remit_inward['Remittance inflows (US$ million)'] != 'Low-and Middle-Income Countries')]
+
+# included only top 10
+top_10_remit_inward = remit_inward.nlargest(10, 'Mean Remittance')
+top_10_remit_inward_sorted = top_10_remit_inward.sort_values(by='Mean Remittance', ascending=False)
+
+# plot the figure
+plt.figure(figsize=(8, 6))  # Adjusted figure size
+
+countries = top_10_remit_inward_sorted['Remittance inflows (US$ million)']
+mean_remittance = top_10_remit_inward_sorted['Mean Remittance']
+
+# Define the position of bars on y-axis
+y_pos = range(len(countries))
+
+# Define the width of each bar based on 'Mean Remittance'
+bar_width = mean_remittance * 0.01  # Adjust multiplier for appropriate width
+
+plt.barh(y_pos, mean_remittance, color='skyblue', height=0.8, edgecolor='black', linewidth=1, alpha=0.8)
+
+plt.yticks(y_pos, countries, fontsize=8)
+plt.xlabel('Mean Remittance (US$ Million)', fontsize=8) 
+#plt.ylabel('Countries Receiving Remittance', fontsize=8)
+plt.title('Top 10 Mean Remittance Inflows', fontsize=10)
+
+
+plt.xlim(0, mean_remittance.max() * 1.1)
+plt.ylim(-0.5, len(countries) - 0.5)
+plt.gca().invert_yaxis()
+plt.tight_layout()
+plt.savefig("../results/top_10_remittance_inflows_bar_variable_width_small.png", dpi=300)
+plt.show()
+```
+
+There might be countries which are much more dependent on the remittance as shown in @fig-
+
+```{python}
+top_10_gdp = remit_inward.nlargest(20, "% of GDP in 2023")
+fig, ax = plt.subplots(figsize=(18, 8))
+
+top_10_gdp_sorted = top_10_gdp.sort_values('% of GDP in 2023', ascending=True)
+top_10_gdp_sorted.plot(y='% of GDP in 2023', x='Remittance inflows (US$ million)', kind='barh', ax=ax, color='teal', legend=False)
+ax.set_xlabel('% of GDP Remittance Contributed in 2023')
+ax.set_ylabel('Countries')
+ax.set_title('Remittance Inflows as Percentage of GDP in 2023')
+ax.set_yticklabels(top_10_gdp_sorted['Remittance inflows (US$ million)'])
+plt.savefig("../results/Top 10 Countries by Remittance Inflows as % of their GDP in 2023.png")
+plt.show()
+```
 
 ### Sentiments
 
+For the sentimental analysis, texts were extracted from PDF files. The NTLK library tokenizes the text, and uses the NRC Emotion Lexicon to identify and count the emotions associated with the words in the text. The sentiment scores across multiple PDFs were aggregated, collects words associated with each sentiment, and visualized the overall sentiment distribution in the @fig-sentiment
+
+![Sentiment Analysis](sentimental_disstribution.png){#fig-sentiment}
+
+@fig-cloud
+![Word Cloud](wordcloud_high_quality.png){#fig-cloud}
 
 
-### Clustering
+### Clustering and Comparing 
 
 
+```{python}
+df = inflows_cleaned[['Country of birth/nationality', 'Country', 'Year', 'Value']]
+
+# k means clustering
+from sklearn.cluster import KMeans
+from sklearn.preprocessing import StandardScaler
 
 
+# specifying the number of clusters (k)
+k = 4
+
+# Fit K-means clustering algorithm
+kmeans = KMeans(n_clusters=k)
+kmeans.fit(df[['Value']])
+
+# Add cluster labels to the DataFrame
+df['cluster_label'] = kmeans.labels_ 
+
+# Visualize the clusters
+plt.figure(figsize=(10, 6))
+
+# Plot data points
+plt.scatter(df['Value'], [0]*len(df), c=df['cluster_label'], cmap='viridis', alpha=0.5, marker='.')
+
+# Plot centroids
+centroids = kmeans.cluster_centers_
+plt.scatter(centroids, [0]*k, marker='x', s=100, color='red')
+
+plt.title('K-means Clustering of Countries based on Outflowing Population')
+plt.xlabel('Normalized Outflowing Population')
+plt.yticks([])  # Remove y-axis ticks
+plt.show()
+```
+
+
+```{python}
+plt.figure(figsize=(10, 8))
+scatter = plt.scatter(df['Value'], df['Year'], c=df['cluster_label'])
+
+unique_labels = np.unique(df['cluster_label'])
+
+# colormap used in the scatter plot
+cmap = plt.colormaps.get_cmap(scatter.get_cmap())
+
+cluster_colors = {}
+
+# Extract colors for each cluster label
+for label in unique_labels:
+    cluster_colors[label] = cmap(label / (len(unique_labels) - 1))
+
+for label, color in cluster_colors.items():
+    plt.scatter([], [], color=color, label=f'Cluster {label}')
+
+plt.legend(loc='upper right', scatterpoints=1, title='Clusters')
+
+plt.xlabel('Value')
+plt.ylabel('Year')
+plt.title('K-means Clusters of Countries')
+
+plt.show()
+
+
+```
+
+```{python}
+plt.figure(figsize=(10, 20))
+scatter = plt.scatter(df['Value'], df['Country'], c=df['cluster_label'])
+
+unique_labels = np.unique(df['cluster_label'])
+
+# colormap used in the scatter plot
+cmap = plt.colormaps.get_cmap(scatter.get_cmap())
+
+cluster_colors = {}
+
+# Extract colors for each cluster label
+for label in unique_labels:
+    cluster_colors[label] = cmap(label / (len(unique_labels) - 1))
+
+for label, color in cluster_colors.items():
+    plt.scatter([], [], color=color, label=f'Cluster {label}')
+
+plt.legend(loc='upper right', scatterpoints=1, title='Clusters')
+
+plt.xlabel('Value')
+plt.ylabel('Country')
+plt.title('K-means Clusters of Countries')
+
+plt.show()
+```
+### Comparing Schengen vs Other 
+
+```{python}
+flows = pd.read_csv("../data/inflows of foreign population by nationality.csv", low_memory=False)
+
+flows = flows.dropna(subset=['Value'])
+flows_cleaned = flows.dropna(subset=['Value'])
+
+# dropping columns that we don't need
+flows_cleaned = flows.drop(columns=['Flag Codes', 'Flags'])
+flows_cleaned = flows_cleaned[flows_cleaned['Country of birth/nationality'] == "Total"]
+flows_cleaned = flows_cleaned[(flows_cleaned['Variable'] == 'Inflows of foreign population by nationality') | (flows_cleaned['Variable'] == 'Outflows of foreign population by nationality')]
+flows_cleaned = flows_cleaned[['Country', 'Year', 'Variable', 'Value']]
+
+# selecting only few countries in both groups
+schengen_countries = ['Germany', 'France', 'Greece', 'Spain', 'Italy']
+non_schengen = ['Australia', 'Canada', 'Japan', 'New Zealand', 'United States']
+schengen_non = flows_cleaned[flows_cleaned['Country'].isin(schengen_countries + non_schengen)]
+
+# functon to add a column
+def is_schengen(country):
+    if country in schengen_countries:
+        return 'Schengen'
+    else:
+        return 'Non_Schengen'
+```
+
+```{python}
+schengen_non['Schengen'] = schengen_non['Country'].apply(is_schengen)
+# Filter the DataFrame to include only the rows where the variable is 'Inflows of foreign population by nationality'
+inflows_df = schengen_non[schengen_non['Variable'] == 'Inflows of foreign population by nationality']
+outflows_df = schengen_non[schengen_non['Variable'] == 'Outflows of foreign population by nationality']
+
+# Group the data by the 'Schengen' column and calculate the total migration flow for each group
+migration_comparison = inflows_df.groupby('Schengen')['Value'].sum()
+```
+
+```{python}
+# emigrating population
+fig, ax = plt.subplots(figsize=(10, 6))
+
+colors = ['b' if s == 'Schengen' else 'r' for s in inflows_df['Schengen']]
+
+# Create separate scatter plots for each color
+schengen = ax.scatter(inflows_df.loc[inflows_df['Schengen'] == 'Schengen', 'Year'],
+                      inflows_df.loc[inflows_df['Schengen'] == 'Schengen', 'Value'],
+                      c='b', alpha=0.5, label='Schengen')
+
+non_schengen = ax.scatter(inflows_df.loc[inflows_df['Schengen'] == 'Non_Schengen', 'Year'],
+                          inflows_df.loc[inflows_df['Schengen'] == 'Non_Schengen', 'Value'],
+                          c='r', alpha=0.5, label='Non Schengen')
+
+# Add legend
+ax.legend(handles=[schengen, non_schengen])
+
+ax.set_xlabel('Year')
+ax.set_ylabel('Value')
+ax.set_title('Inflows of foreign population')
+
+plt.show()
+```
+
+```{python}
+# foreign_population leaving
+fig, ax = plt.subplots(figsize=(10, 6))
+
+colors = ['b' if s == 'Schengen' else 'r' for s in outflows_df['Schengen']]
+
+# Create separate scatter plots for each color
+schengen = ax.scatter(outflows_df.loc[outflows_df['Schengen'] == 'Schengen', 'Year'],
+                      outflows_df.loc[outflows_df['Schengen'] == 'Schengen', 'Value'],
+                      c='b', alpha=0.5, label='Schengen')
+
+non_schengen = ax.scatter(outflows_df.loc[outflows_df['Schengen'] == 'Non_Schengen', 'Year'],
+                          outflows_df.loc[outflows_df['Schengen'] == 'Non_Schengen', 'Value'],
+                          c='r', alpha=0.5, label='Non Schengen')
+
+# Add legend
+ax.legend(handles=[schengen, non_schengen])
+
+ax.set_xlabel('Year')
+ax.set_ylabel('Value')
+ax.set_title('Outflows of foreign population')
+
+plt.show()
+```
+
+# Limitations and Conclusions
+Data collected during/after the COVID years is not complete. 
+Data on undocumented migrations was not studied for this research.
 
 
 ## Additional Figures
@@ -363,46 +684,7 @@ Flows
 
 
 
-**Welcome** to *my* ~~super~~ SUPER awesome `blog` post!
-$$x^2 = 1$$
 
-## Quarto is cool
-
-This section was copy/pasted from various parts of the [Quarto website](https://quarto.org/docs/get-started/hello/vscode.html).
-
-:::{.callout-note}
-Note that there are five types of callouts, including:
-`note`, `tip`, `warning`, `caution`, and `important`.
-:::
-
-:::{.callout-tip}
-## Tip With Caption
-
-This is an example of a callout with a caption.
-:::
-
-
-For your reference, here's an example of a Python code cell in Quarto, along with a figure that gets generated, along with a caption and a label so that it can be referred to automatically as "Figure 1" (or whatever) in the writeup.
-
-For a demonstration of a line plot on a polar axis, see @fig-polar.
-
-```{python}
-#| label: fig-polar
-#| fig-cap: "A line plot on a polar axis"
-
-import numpy as np
-import matplotlib.pyplot as plt
-
-r = np.arange(0, 2, 0.01)
-theta = 2 * np.pi * r
-fig, ax = plt.subplots(
-  subplot_kw = {'projection': 'polar'} 
-)
-ax.plot(theta, r)
-ax.set_rticks([0.5, 1, 1.5, 2])
-ax.grid(True)
-plt.show()
-```
 
 Here's an example of citing a source [see @phil99, pp. 33-35]. Be sure the source information is entered in "BibTeX" form in the `references.bib` file.
 
