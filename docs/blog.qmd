@@ -1,5 +1,5 @@
 ---
-title: "Migration"
+title: "The Evolving Tale of Human Mobility: A Comprehensive Analysis of Trends in Recent Migrations as the Interplay Between Socio-political and Economic Forces"
 subtitle: "Spring 2024"
 author: "Nischal Bhandari"
 bibliography: references.bib
@@ -15,25 +15,26 @@ format:
 jupyter: python3
 ---
 
-**Migration** seems to be ingrained in the blueprint of our existence. From the dawn of our species, humans have migrated from Africa to Asia to Eurasia to America. Early ancestors moved from places to places in search of better habitats and food. Migration not only ensured the survival of our species through suitable climate and food but also changed the behaviors and lifestyle of our species as a whole. The hunter-gatherers tribe settled into agricultural soci- eties, and there are several other revolutionary transformations to the structures of our society that can be ascribed to migration–rise and fall of kingdoms, industrial revolution, displace- ment of indigenous population, changes in the population characteristics (gender, religion, age groups), to mention some. 
+
+Haven't we all thought about moving to another location during several occasions in our lives? It is not only you or me or those in our circles who find ourselves in the middle of such a crossroad, struggling to decide between the current location and potential destination/s. The story seems to run a long way back. Our ancestors moved from one place to another engaging in business, seeking favorable climatic conditions, raging wars, and building settlements. At a special level, humans tend to be a very mobile species.
+
 
 ![Source: Hubble Day History Blog](https://hubbledayhistoryhome.files.wordpress.com/2019/04/screenshot-2019-04-14-at-21.01.13.png){fig-alt="A poster depicting genetic basis of migrations." fig-align="left" width=220%}
 
+It has been ages since we started migrating. First migration of modern humans from Africa dates back to 70,000 to 100,000 years ago. Yes, it has been a long time, and we still have not stopped migrating. However, the patterns, drivers, and impacts of migration have changed over time. This blog will explore the modern trends in migration through multiple lenses.
+
 :::{.callout-note}
-Migration simply said is the movement of people in and out of a place. At a given time, a specific place might be seeing inflows of new and outflows of old population simultaneously.
+Which countries are the top destinations? Where do the large emigrating populations come from? Are there any national/ethnic/environmental reasons that explain migration of some populations? How are migrating populations connected to the economy of their birth countries and the destinations? Are there any policies that favor human mobility? 
 :::
 
-
-While the nature of migration and its consequences have changed along with times, it is important that the patterns of migration are scrutinized to understand the socioeconomic drivers of migration. This project will study the mobility of human from different countries across two different decades, 2000-2010 and 2010-2020. As stated before, humans have always been mobile species, but the motives have evolved over time. So it will also be equally important to shed light on the driving forces of migration, rather than bluntly mentioning the statistics. In order to achieve this aim, this project will look migration patterns through the lenses of economy, war, epidemics, and human rights.
-
-# Data Collection
+# Data Description
 
 The datasets that will be used to study the migration dynamics will be obtained from "Organization of Economic Cooperation and Development (OECD)" and "The Global Knowledge Partnership on Migration and Development (KNOMAD)".
-The [dataset](https://stats.oecd.org/Index.aspx?DataSetCode=MIG) from OECD will contain the migration rate--record as the number of individuals migrating from one country to another--across 2000-2022 where as [KNOMAD's datasets](https://www.knomad.org/data/remittances) will contain the capital outflows from and inflows of a specific country.
+The [dataset](https://stats.oecd.org/Index.aspx?DataSetCode=MIG) from OECD will contain the migration rate--recorded as the number of individuals migrating from one country to another--across 2000-2022 where as [KNOMAD's datasets](https://www.knomad.org/data/remittances) contains the information about the remittance of a country. Remittance is the capital received by a country from their native populations working overseas.
 
-The OECD dataset has measures of inflows and outflows of foreign population for a country. The measures are based on population registers, residence and/or work permits, and estimation from surveys.
+The OECD dataset has measures of non-native populations entering (inflows) and leaving(outflows) from top destinations. These measures are based on population registers, residence and/or work permits, and estimation from surveys.
 
-The general view of the the data in OECD dataset is shown in the following table.
+The general view of the the data in OECD dataset is shown in @tbl-Migration.
 
 ```{python}
 #| label: tbl-Migration
@@ -53,7 +54,8 @@ flows_cleaned = flows.drop(columns=['Flag Codes', 'Flags'])
 flows_cleaned.head()
 ```
 
-The remittance data looks like the following table.
+The general overview of the remittance sent out by a country is shown in @tbl-Remittance.
+
 ```{python}
 #| label: tbl-Remittance
 #| tbl-cap: "Remittance Flows"
@@ -63,16 +65,27 @@ remitance = remitance.dropna()
 remitance.head()
 ```
 
-# Results
+Another dataset on remittance is for the remittance received by a country which is shown in @tbl-Remittance_in
+
+```{python}
+#| label: tbl-Remittance_in
+#| tbl-cap: "Remittance Flows"
+remit_inward = pd.read_excel("../data/inward_remittance_flows_december_2023_1.xlsx")
+remit_inward = remit_inward.dropna()
+remit_inward.head()
+```
+
+We will use these datasets for the rest of our studies.
+
 
 ### Emigrating Population
 
-Emigrating population can be defined as the population that is leaving their native country and is moving into a new country. The reasons and motive for such ouflow can be severals, inclduing employment opportunities, political conflicts, refuge seekers, and so on. The datasets we are using in this project does not have comprehensive information to study for the migration of people, but we will later look into employment opportunities in countries that recieve highest number of emigrants. Other reasons can also be empirically implied based on the conditions at the time of migration in their former residence. For instance, we can expect a bigger number of population leaving a country with ongoing war or political conflcts. First, let's see the general trend in emigrating population. The @fig-inflows shows the total number of foreign people arriving in a destination (for instance, United States) over time. 
+Emigrating population can be defined as the population that is leaving their native country and is moving into a new country. The reasons and motive for such ouflows can be several, inclduing employment opportunities, political conflicts, refugees, and so on. The datasets we are using in this project does not have comprehensive information to study the actual reasons of the migrations, but we will later look into employment opportunities in countries that recieve highest number of emigrants. Other reasons can also be empirically implied based on the conditions at the time of migration in their former countries. For instance, we can expect a bigger number of population leaving a country with ongoing war or political conflcts or a climate disaster. First, let's see the general trend in emigrating population. The @fig-inflows shows the total number of foreign people arriving in a destination (for instance, United States) over time. 
 
 ```{python}
 
 #| label: fig-inflows
-#| fig-cap: "Migration Flows"
+#| fig-cap: "Total emigrating population in a given year. *The daset is limited to OECD and few other countries*."
 inflows_cleaned = flows_cleaned[flows_cleaned['Variable'] == 'Inflows of foreign population by nationality']
 inflows_cleaned = inflows_cleaned[inflows_cleaned['Country of birth/nationality'] != "Total"]
 fig = px.choropleth(
@@ -94,17 +107,17 @@ fig.show()
 
 This figure does not indicate where all these moving population originate from. The figure only shows the total number of immigrants arriving at a destination in a given year. So it would be even more interesting to see where are these populations arrriving from. In @fig-2020in, for brevity and effective communication of information in a compact graph, we will focus only on the top 20 movements in 2020. 
 
-![2020](top_10_migration_inflows_2020.png){#fig-2020in}
+![Total Emigrating Population in 2020, both origins and destinations(arrows) indicated](top_10_migration_inflows_2020.png){#fig-2020in}
 
-The above figure shows a very interesting trend in Europe. Germany tends to be the favorite destination among many European nations (Bulgaria, Italy, Romania, Crotia, Poland). There is a large movement from Ukrain to Poland as well. Syrian populations from west Asia also migrate to Germany in the above graph. The migration from Syria might be the cause of civil wars within the country, but other migrations within the European nations might also be due to the open borders among Schengen nations. 
+The above figure shows a very interesting trend in Europe. Germany tends to be the favorite destination among many European nations (Bulgaria, Italy, Romania, Crotia, Poland). There is a large movement from Ukrain to Poland as well. Syrian populations from west Asia also migrate to Germany in the above graph. The migration from Syria might be the cause of civil unrest within the country while other migrations within the European nations might be due to the open borders among Schengen nations. 
 
-While European nations mostly see continental migrations, other destinations seem to have cross-continental migration. People from India are migrating to US and Canada in 2020. Populations from China also migrate into the US. Spain receives population from Morocco and Brazil while Portugal from Colombia. There are contintation migrations in other continents as well (Mexico to USA, Venezuala to Chile, Chine to Korea and Japan, Viet Nam to Japan), but they are not as consisten as in Europe (see additional figure).
+While European nations mostly see continental migrations, other destinations seem to have cross-continental migration. People from India are migrating to US and Canada in 2020. Populations from China also migrate into the US. Spain receives population from Morocco and Brazil while Portugal from Colombia. There are contintation migrations in other continents as well (Mexico to USA, Venezuala to Chile, China to Korea and Japan, Viet Nam to Japan), but they are not as consistent as in Europe (see additional figure).
 
-Rather than just focusing in the year 2020, seeing the total inflows over time might be better to see the trend as well. The aggregate of top 10 moving population will be visualized with their origin and destination country in the @fig-fig-topmeans.
+Rather than just focusing in the year 2020, seeing the total inflows over time might be better to see the trend. The aggregate of top 10 moving population is visualized with their origin and destination countries in the @fig-topmeans.
 
 ```{python}
 #| label: fig-topmeans
-#| fig-cap: "Top Mean Inflows of Population"
+#| fig-cap: "Top Mean Inflows of Population in 2000-2020."
 mean_inflows_10 = inflows_cleaned[inflows_cleaned['Year'] <= 2020]
 mean_inflows_10 = mean_inflows_10[mean_inflows_10['CO2'] != 'Total']
 # mean_inflows_10 = inflows_10
@@ -134,13 +147,14 @@ fig.show()
 ```
 
 
-As the figure suggests, Germany and US are the top destinations for many moving populations. As was seen in 2020, the top moving populations are very similar on average in 2000-2022 period. So it can be assumed the dynamics between these countries will continue in the future as well, disregarding any unprecendented events like wars.
 
-At this point, after exploring the top emigrating populations and destinations, we might assume that the total migration into these destination have increased over time. So it might a good idea to test our assumption about the change in emigrating population overtime in top destionations. The change in total inflows is depicted for United States, Korea, Japan, Germany, Italy, and Canada in @fig-fig-overtime.
+As the figure suggests, Germany and US are the top destinations for many migrating populations. As was seen in 2020, the top moving populations are very similar on average in 2000-2022 time period. So it can be assumed the dynamics between these countries will continue in the future as well, disregarding any unprecendented events like wars or changes in policies.
+
+At this point, after exploring the top emigrating populations and destinations, we might assume that the total migration into these destination have increased over time. So it might a good idea to test our intuitive  assumption about the change in emigrating population overtime in top destionations. The change in total inflows is depicted for United States, Korea, Japan, Germany, Italy, and Canada in @fig-overtime.
 
 ```{python}
 #| label: fig-overtime
-#| fig-cap: "Inflows Over Time"
+#| fig-cap: " Total Inflows Over Time"
 top_countries = ["United States", "Korea", "Japan", "Germany", "Italy", "Canada"]
 inflows_top_countries = inflows_cleaned[inflows_cleaned['Country'].isin(top_countries)]
 
@@ -168,7 +182,197 @@ plt.tight_layout()
 plt.show()
 ```
 
-There is no stark differences in total inflows over time among these contries expect in Germany. During 2015, there is a large inflows of foreign population compared to the previous years. According to a research, this was attributed to European refugee crisis "when the flow of migrants increased dramatically from 153,000 in 2008 to more than 1 million in 2015. This was mainly due to the growing number of Syrians, Iraqis, Libyans, Afghans and Eritreans fleeing war, ethnic conflict or economic hardship" [1] https://doi.org/10.1371%2Fjournal.pone.0284390 
+
+As shown in the figure @fig-overtime, there is no stark differences in total inflows over time among these countries expect in Germany. During 2015, there is a large inflows of foreign population compared to the previous years. According to a research, this was attributed to European refugee crisis "when the flow of migrants increased dramatically from 153,000 in 2008 to more than 1 million in 2015. This was mainly due to the growing number of Syrians, Iraqis, Libyans, Afghans and Eritreans fleeing war, ethnic conflict or economic hardship". [1] https://doi.org/10.1371%2Fjournal.pone.0284390 
+
+
+#### Naturalization
+
+When we talk about the emigrating populations, naturalization is also part of a conversation. Naturalization is a process by wich a non-national citizen acquires the nationality of a certain country. The tendency to seek nationality in a country can have personal motives but it also can be reflective of the conditions in migrants' birth countries. For instance, migrants fleeing wars, ethnic discrimination, and climate disasters will likely seek permanent settlements in their new destinations. There are two players in this dynamics: the country granting citizenship and the country to which migrants belon to.  The @fig-fig-granting shows the top five countries granting nationality over time. We have line graphs for eight countries, which means that five of these eight countries are the top five grantees of nationality in any given year from 2000-2022.
+
+```{python}
+#| label: fig-granting
+#| fig-cap: " Top countries granting citizenships to non-native populations."
+data = pd.read_csv("../data/inflows of foreign population by nationality.csv", low_memory=False)
+nationality_acquisition = data[data['Variable'] == "Acquisition of nationality by country of former nationality"]
+
+nationality_acquisition_mean = nationality_acquisition.groupby(['YEA', 'Country'])['Value'].sum().groupby('YEA', group_keys=False).nlargest(5).reset_index()
+fig = px.line(nationality_acquisition_mean, x='YEA', y='Value', color='Country', title='Total Naturalization of Foreign Poupulations')
+fig.update_layout(
+    legend_title_text='Country Granting Citizenship',
+    legend_title_font=dict(size=12),
+    plot_bgcolor = 'white', 
+    title_x = 0.5
+)
+fig.update_xaxes(title_text='Year')
+fig.update_yaxes(title_text='Total Acquisition of Nationality')
+fig.show()
+```
+
+It can be seen in the figure that there are no drastic changes in the trend of naturalization among non-native populations except in US. For instance, in 2003, the total numbers of naturalization falls compared to 2002. Similarly, the rate increase from 2007 to 2008 and decreases from 2008-2010. Rather than just highlighting the trend of naturalization over time, it also begs attention to see which population are seeking naturalization in a given year. Due to constraints in space and time, this blog only explores it for a single year. The @fig-seeking studies this for the year 2021.
+
+
+```{python}
+#| label: fig-seeking
+#| fig-cap: "Top non-native populations seeking citizenships."
+nationality_acquisition_2021 = nationality_acquisition[(nationality_acquisition['YEA'] == 2021) & (nationality_acquisition['CO2'] != "TOT")]
+top_10_acquisition = nationality_acquisition_2021.nlargest(10, columns = "Value")
+fig = px.bar(top_10_acquisition, x='Country', y='Value', color='Country of birth/nationality', title='Acquisition of Nationality by Foreign Population in 2021')
+fig.show()
+```
+
+
+@fig-seeking shows the top 10 non-native populations seeking nationality in different destinations. Multiple nationalites including India, China, Mexico, Phillipines, Cuba, and Dominican Republic seek naturalization in US. Other countries do not have multiple, large non-native populations seeking nationality. Syrian migrants were on of the top 10 populations acquiring nationality, and they were naturalized in Netherlands and Sweden. Moroccan migrants were naturalized in Spain and large number of Indian migrants also gained nationaloty in Australia in 2021. The data collected for 2021 might be incomplete or even unrepresentative of the general phenomenon due to the COVID-19 pandemic. 
+
+
+### Returning Population
+While some migrants tend to stay permanently at their destinations, some tend to return to their birth countries. @fig-returning shows the amount of non-native population returning to their birth countries.
+
+```{python}
+#| label: fig-returning
+#| fig-cap: " Non-native populations returning from a country."
+#| 
+outflows_cleaned = flows_cleaned[flows_cleaned['Variable'] == 'Outflows of foreign population by nationality']
+outflows_cleaned = outflows_cleaned[outflows_cleaned['Country of birth/nationality'] != "Total"]
+fig = px.choropleth(
+    data_frame=outflows_cleaned.groupby(['Country of birth/nationality', 'CO2', 'Year'], as_index=False)['Value'].sum(),
+    locations="CO2",
+    animation_frame="Year",
+    animation_group="CO2",
+    color="Value",
+    title="Return of Native Population",
+    color_continuous_scale="Viridis",
+    projection="natural earth",
+    labels={"Value": "Total Migration Value"},
+    hover_name="Country of birth/nationality",
+    template="plotly",
+)
+
+fig.show()
+```
+
+Even though the @fig-returning shows from which of thier temporary residence migrants are returning, it does not show which countries they are returning to. @fig-return-birth shows the movement from the temporary residences to birth countries for top moving populations in 2020. Birth countries are indicated with an arrow.
+
+![Top populations returning from overseas to their birth nations.](top_10_migration_returns_2020.png){#fig-return-birth}
+
+We can deduce for the figure that the within a continental movements see higher return. For instance, in 2020, muliple non-native populations returned to their birth countries in large number. Some of the top returned were also seen within the west Asian countries: Turkey to Iran, Iraq, Azerbaijan, Syria,and Turkemenistan. East Asian countries also had huge returns of native populations: Japan to  Viet Nam and Korea; Korea to China, Thailand, and Viet Nam.
+
+The total returns over the period of 2000-2020 is also shown for top countries in @fig-returns-total.
+
+```{python}
+# total from 2000 - 2020
+outflows_2000_2020 = outflows_cleaned[outflows_cleaned['Year'] <= 2020]
+outflows_2000_2020 = outflows_2000_2020[outflows_2000_2020['CO2'] != 'TOT'].sort_values('Value', ascending=False)
+
+# total migration
+outflows_2000_2020 = outflows_2000_2020.groupby(['Country of birth/nationality', 'Country'])['Value'].sum().reset_index(name='Total Return')
+top_10__return = outflows_2000_2020.nlargest(12, "Total Return")
+```
+
+
+```{python}
+#| label: fig-returns-total
+#| fig-cap: " Top 10 populations returning to their birth countries"
+import plotly.graph_objects as go
+
+def plot_migration_arc_diagram_mean_inflows(data, top_n=10):
+
+    filtered_data = data
+
+    nodes = list(set(filtered_data['Country of birth/nationality']).union(set(filtered_data['Country'])))
+
+    links = []
+    for _, row in filtered_data.iterrows():
+        links.append({'source': row['Country'], 'target': row['Country of birth/nationality'], 'value': row['Total Return']})
+
+    fig = go.Figure(data=[
+        go.Sankey(
+            node=dict(
+                pad=15,
+                thickness=20,
+                line=dict(color="black", width=0.5),
+                label=nodes
+            ),
+            link=dict(
+                source=[nodes.index(link['source']) for link in links],
+                target=[nodes.index(link['target']) for link in links],
+                value=[link['value'] for link in links]
+            )
+        )
+    ])
+
+    fig.update_layout(title=f"Top {top_n} Population Return in 2000-2020", title_x=0.5)  # Center the title
+
+    fig.update_layout(
+        annotations=[
+            dict(
+                x=0.0,
+                y=1.0,
+                xref='paper',
+                yref='paper',
+                text='Temporary Residence',
+                showarrow=False,
+                font=dict(
+                    size=16,
+                    color='black'
+                )
+            ),
+            dict(
+                x=1.0,
+                y=1.1,
+                xref='paper',
+                yref='paper',
+                text='Birth Country',
+                showarrow=False,
+                font=dict(
+                    size=16,
+                    color='black'
+                )
+            )
+        ]
+    )
+
+    fig.show()
+    
+
+
+plot_migration_arc_diagram_mean_inflows(top_10__return)
+
+```
+
+The overall returns also verifies our previous findings that the migrations within a continent tends to have higher return rate. If the return rate is higer, we can also presume that the higher entrance rate might not be a huge burdern for a country recieving migrants in a long term.
+
+Now, we will see the return rate over time for the countries that saw maximum returns in 2000-2020. @fig-sel shows the how the number of native population returning changes for some such countries over the years. 
+
+```{python}
+#| label: fig-select-returns
+#| fig-cap: " Total return of native populations over time"
+top_countries = ['China', 'Poland', 'Romania', 'Italy', 'India', 'Mexico']
+outlfows_top_countries = outflows_cleaned[outflows_cleaned['Country of birth/nationality'].isin(top_countries)]
+
+# plotting a graph
+plt.figure(figsize=(8, 5))
+sns.set(style="whitegrid")
+
+
+sns.lineplot(data=outlfows_top_countries, x="Year", y="Value", hue="Country of birth/nationality", estimator=sum, errorbar = None, marker="o", markersize=8, linewidth=2)
+
+plt.title("Total Return of Population", fontsize=16)
+plt.xlabel("Years", fontsize=14)
+plt.ylabel("Total Returning Population", fontsize=14)
+
+plt.grid(True, linestyle="--", alpha=0.7)
+
+plt.xticks(fontsize=12)
+plt.yticks(fontsize=12)
+plt.legend(title="Country", title_fontsize='14', loc='upper left')
+plt.tight_layout()
+plt.show()
+```
+
+Some of the countries we studied tend to have increasing return populations (China, Romania, and Poland) while other countries (India, Mexico, and Italy) did not show any significant changes in the number of returning populations.
+
+### Economic Involvements of Migrating Population
 
 #### Employment Among Non-native Population
 
@@ -239,179 +443,7 @@ plt.savefig('../results/employment_rates_among_FB_gender.png', dpi=300, bbox_inc
 plt.show()
 ```
 
-
-#### Naturalization
-
-When we talk about the migrants, naturalization is also part of a conversation. Naturalization is a process by wich a non-national citizen acquires the nationality of a certain country. The @fig- shows the top five countries granting nationality over time. We have line graphs for eight countries, which means that five of these eight countries are the top five grantees of nationality in any given year from 2000-2022.
-
-```{python}
-data = pd.read_csv("../data/inflows of foreign population by nationality.csv", low_memory=False)
-nationality_acquisition = data[data['Variable'] == "Acquisition of nationality by country of former nationality"]
-
-nationality_acquisition_mean = nationality_acquisition.groupby(['YEA', 'Country'])['Value'].sum().groupby('YEA', group_keys=False).nlargest(5).reset_index()
-fig = px.line(nationality_acquisition_mean, x='YEA', y='Value', color='Country', title='Total Naturalization of Foreign Poupulations')
-fig.update_layout(
-    legend_title_text='Country Granting Citizenship',
-    legend_title_font=dict(size=12),
-    plot_bgcolor = 'white', 
-    title_x = 0.5
-)
-fig.update_xaxes(title_text='Year')
-fig.update_yaxes(title_text='Total Acquisition of Nationality')
-fig.show()
-```
-
-It can be seen in the figure that there are no drastic changes in the trend of naturalization among non-native populations except in US. For instance, in 2003, the total numbers of naturalization falls compared to 2002. Similarly, the rate increase from 2007 to 2008 and decreases from 2008-2010. Rather than just highlighting the trend of naturalization over time, it also begs attention to see which population are seeking naturalization in a given year. The @fig- studies this for the year 2021.
-
-
-```{python}
-nationality_acquisition_2021 = nationality_acquisition[(nationality_acquisition['YEA'] == 2021) & (nationality_acquisition['CO2'] != "TOT")]
-top_10_acquisition = nationality_acquisition_2021.nlargest(10, columns = "Value")
-fig = px.bar(top_10_acquisition, x='Country', y='Value', color='Country of birth/nationality', title='Acquisition of Nationality by Foreign Population in 2021')
-fig.show()
-```
-
-The graph shows the top 10 non-native population seeking nationality in different destinations. Multiple nationalites including India, China, Mexico, Phillipines, Cuba, and Dominican Republic seek naturalization in US. Other countries do not have multiple large non-native populations seeking nationality. Syrian migrants were on of the top 10 populations acquiring nationality, and they were naturalized in Netherlands and Sweden. Moroccan migrants were naturalized in Spain and Indians also gained nationaloty in Australia in 2021. The data collected for 2021 might be incomplete or even unrepresentative of the general phenomenon due to the COVID-19 pandemic. 
-
-
-### Returning Population
-```{python}
-outflows_cleaned = flows_cleaned[flows_cleaned['Variable'] == 'Outflows of foreign population by nationality']
-outflows_cleaned = outflows_cleaned[outflows_cleaned['Country of birth/nationality'] != "Total"]
-fig = px.choropleth(
-    data_frame=outflows_cleaned.groupby(['Country of birth/nationality', 'CO2', 'Year'], as_index=False)['Value'].sum(),
-    locations="CO2",
-    animation_frame="Year",
-    animation_group="CO2",
-    color="Value",
-    title="Return of Native Population",
-    color_continuous_scale="Viridis",
-    projection="natural earth",
-    labels={"Value": "Total Migration Value"},
-    hover_name="Country of birth/nationality",
-    template="plotly",
-)
-
-fig.show()
-```
-
-Return Population in 2020 (with lines)
-
-![2020](top_10_migration_returns_2020.png)
-
-Within a continental movements see higher return. For instance, in 2020, ....
-
-
-```{python}
-# total from 2000 - 2020
-outflows_2000_2020 = outflows_cleaned[outflows_cleaned['Year'] <= 2020]
-outflows_2000_2020 = outflows_2000_2020[outflows_2000_2020['CO2'] != 'TOT'].sort_values('Value', ascending=False)
-
-# total migration
-outflows_2000_2020 = outflows_2000_2020.groupby(['Country of birth/nationality', 'Country'])['Value'].sum().reset_index(name='Total Return')
-top_10__return = outflows_2000_2020.nlargest(12, "Total Return")
-```
-
-
-```{python}
-import plotly.graph_objects as go
-
-def plot_migration_arc_diagram_mean_inflows(data, top_n=10):
-
-    filtered_data = data
-
-    nodes = list(set(filtered_data['Country of birth/nationality']).union(set(filtered_data['Country'])))
-
-    links = []
-    for _, row in filtered_data.iterrows():
-        links.append({'source': row['Country'], 'target': row['Country of birth/nationality'], 'value': row['Total Return']})
-
-    fig = go.Figure(data=[
-        go.Sankey(
-            node=dict(
-                pad=15,
-                thickness=20,
-                line=dict(color="black", width=0.5),
-                label=nodes
-            ),
-            link=dict(
-                source=[nodes.index(link['source']) for link in links],
-                target=[nodes.index(link['target']) for link in links],
-                value=[link['value'] for link in links]
-            )
-        )
-    ])
-
-    fig.update_layout(title=f"Top {top_n} Population Return in 2000-2020", title_x=0.5)  # Center the title
-
-    fig.update_layout(
-        annotations=[
-            dict(
-                x=0.0,
-                y=1.0,
-                xref='paper',
-                yref='paper',
-                text='Temporary Residence',
-                showarrow=False,
-                font=dict(
-                    size=16,
-                    color='black'
-                )
-            ),
-            dict(
-                x=1.0,
-                y=1.1,
-                xref='paper',
-                yref='paper',
-                text='Birth Country',
-                showarrow=False,
-                font=dict(
-                    size=16,
-                    color='black'
-                )
-            )
-        ]
-    )
-
-    fig.show()
-    
-
-
-plot_migration_arc_diagram_mean_inflows(top_10__return)
-
-```
-
-
-Continental population are some of the highly returning population compared to the cross-continental movements even some of such cross-continental are in the top 10 moving populations.
-
-Trend in top returning population
-
-```{python}
-top_countries = ['China', 'Poland', 'Romania', 'Italy', 'India', 'Mexico']
-outlfows_top_countries = outflows_cleaned[outflows_cleaned['Country of birth/nationality'].isin(top_countries)]
-
-# plotting a graph
-plt.figure(figsize=(8, 5))
-sns.set(style="whitegrid")
-
-
-sns.lineplot(data=outlfows_top_countries, x="Year", y="Value", hue="Country of birth/nationality", estimator=sum, errorbar = None, marker="o", markersize=8, linewidth=2)
-
-plt.title("Total Return of Population", fontsize=16)
-plt.xlabel("Years", fontsize=14)
-plt.ylabel("Total Returning Population", fontsize=14)
-
-plt.grid(True, linestyle="--", alpha=0.7)
-
-plt.xticks(fontsize=12)
-plt.yticks(fontsize=12)
-plt.legend(title="Country", title_fontsize='14', loc='upper left')
-plt.tight_layout()
-plt.show()
-```
-
-
-### Remittance
+#### Remittance
 
 One of the often overlooked characteristics of migration is remittance. Remittance, in this context, is defined as the sum of money sent by a person working abroad back to their birth country. 
 
@@ -487,7 +519,7 @@ For the sentimental analysis, texts were extracted from PDF files. The NTLK libr
 ![Word Cloud](wordcloud_high_quality.png){#fig-cloud}
 
 
-### Clustering and Comparing 
+### Differences in Migrations across years and Countries 
 
 
 ```{python}
@@ -580,7 +612,8 @@ plt.title('K-means Clusters of Countries')
 
 plt.show()
 ```
-### Comparing Schengen vs Other 
+
+### Schengen vs Non-Schengen: An Analysis of differing philosophies in human mobility
 
 ```{python}
 flows = pd.read_csv("../data/inflows of foreign population by nationality.csv", low_memory=False)
