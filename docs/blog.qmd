@@ -23,9 +23,9 @@ Haven't we all thought about moving to another location during several occasions
 
 It has been ages since we started migrating. First migration of modern humans from Africa dates back to 70,000 to 100,000 years ago. Yes, it has been a long time, and we still have not stopped migrating. However, the patterns, drivers, and impacts of migration have changed over time. This blog will explore the modern trends in migration through multiple lenses.
 
-:::{.callout-note}
-Which countries are the top destinations? Where do the large emigrating populations come from? Are there any national/ethnic/environmental reasons that explain migration of some populations? How are migrating populations connected to the economy of their birth countries and the destinations? Are there any policies that favor human mobility? 
-:::
+> Which countries are the top destinations? Where do the large emigrating populations come from? Are there any national/ethnic/environmental reasons that explain migration of some populations? How are migrating populations connected to the economy of their birth countries and the destinations? Are there any policies that favor human mobility? 
+
+
 
 # Data Description
 
@@ -77,6 +77,9 @@ remit_inward.head()
 
 We will use these datasets for the rest of our studies.
 
+:::{.callout-note}
+Migration can be understood as the movement of people in and out of a country. Moving in of non-native populations and moving out of native population can happen simultaneously.
+:::
 
 ### Emigrating Population
 
@@ -188,7 +191,7 @@ As shown in the figure @fig-overtime, there is no stark differences in total inf
 
 #### Naturalization
 
-When we talk about the emigrating populations, naturalization is also part of a conversation. Naturalization is a process by wich a non-national citizen acquires the nationality of a certain country. The tendency to seek nationality in a country can have personal motives but it also can be reflective of the conditions in migrants' birth countries. For instance, migrants fleeing wars, ethnic discrimination, and climate disasters will likely seek permanent settlements in their new destinations. There are two players in this dynamics: the country granting citizenship and the country to which migrants belon to.  The @fig-fig-granting shows the top five countries granting nationality over time. We have line graphs for eight countries, which means that five of these eight countries are the top five grantees of nationality in any given year from 2000-2022.
+When we talk about the emigrating populations, naturalization is also part of a conversation. Naturalization is a process by wich a non-national citizen acquires the nationality of a certain country. The tendency to seek nationality in a country can have personal motives but it also can be reflective of the conditions in migrants' birth countries. For instance, migrants fleeing wars, ethnic discrimination, and climate disasters will likely seek permanent settlements in their new destinations. There are two players in this dynamics: the country granting citizenship and the country to which migrants belon to.  The @fig-granting shows the top five countries granting nationality over time. We have line graphs for eight countries, which means that five of these eight countries are the top five grantees of nationality in any given year from 2000-2022.
 
 ```{python}
 #| label: fig-granting
@@ -342,7 +345,7 @@ plot_migration_arc_diagram_mean_inflows(top_10__return)
 
 The overall returns also verifies our previous findings that the migrations within a continent tends to have higher return rate. If the return rate is higer, we can also presume that the higher entrance rate might not be a huge burdern for a country recieving migrants in a long term.
 
-Now, we will see the return rate over time for the countries that saw maximum returns in 2000-2020. @fig-sel shows the how the number of native population returning changes for some such countries over the years. 
+Now, we will see the return rate over time for the countries that saw maximum returns in 2000-2020. @fig-select-returns shows the how the number of native population returning changes for some such countries over the years. 
 
 ```{python}
 #| label: fig-select-returns
