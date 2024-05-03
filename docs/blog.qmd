@@ -1,7 +1,6 @@
 ---
-title: "The Evolving Tale of Human Mobility: A Comprehensive Analysis of Trends in Recent Migrations as the Interplay Between Socio-political and Economic Forces"
-subtitle: "Spring 2024"
-author: "Nischal Bhandari"
+title: "Where Are We Going? Tracing the Ever-Evolving Tale of Human Migration"
+subtitle: "Nischal Bhandari"
 bibliography: references.bib
 number-sections: false
 format:
@@ -15,15 +14,25 @@ format:
 jupyter: python3
 ---
 
+![Photograph: Zakir Hossain Chowdhury / Barcro](https://u4d2z7k9.rocketcdn.me/wp-content/uploads/2019/02/villagers-dried-river-bed.jpg){fig-alt="Villagers on dried river bed in Satkhira, Bangladesh." width="100%"}
 
-Haven't we all thought about moving to another location during several occasions in our lives? It is not only you or me or those in our circles who find ourselves in the middle of such a crossroad, struggling to decide between the current location and potential destination/s. The story seems to run a long way back. Our ancestors moved from one place to another engaging in business, seeking favorable climatic conditions, raging wars, and building settlements. At a special level, humans tend to be a very mobile species.
+Haven't we all thought about moving to another location during several occasions in our lives? Probably, more than once. May be we got a better job offer in another city or a country. Maybe our country is devasted by wars and ethnic conflicts, and we don't feel safe in its territory. Maybe our place faced severe climatic conditions, and there remained no means to sustain a life. For one reason or another, humans have been moving across the globe. Our ancestors moved around engaging in business, seeking favorable climatic conditions, waging wars, and building settlements. As a species, humans tend to be a very mobile species.
+
+It has been ages since we started migrating. First migration of modern humans from Africa dates back to 70,000 to 100,000 years ago. Yes, it has been a long time, and we still have not stopped migrating. However, the patterns, drivers, and impacts of migration have changed over time. Even within a given period of time, the reasons behind why people move vary from person to person. We all have personal story behind why we leave the accustomed place and people behind to start anew at an unfamiliar place. In some cases the prospects of an prosperous life at a destination can be more attractive while in other cases the reality at the current residence can be dreadful, both driving migrations among people. While it is impossible to track the personal stories of every migrating individual, because of the collective systems in which we live and behave, it is possible to study and generalize the overall story of how and why we migth be migrating. This blog is an attempt to explore the modern trends in migrations since 2000 till 2022 with respect to economy, socio-political conflicts, and human rights of displaced populations.
+
+::: {.callout-note icon=false}
+
+## Research Questions
+
+* Which countries are the top destinations? 
+* Where do the large emigrating populations come from? 
+* Are there any national/ethnic/environmental reasons that explain migration of some populations? 
+* How are migrating populations connected to the economy of their birth countries and the destinations? 
+* Are there any policies that favor human mobility? 
+
+:::
 
 
-![Source: Hubble Day History Blog](https://hubbledayhistoryhome.files.wordpress.com/2019/04/screenshot-2019-04-14-at-21.01.13.png){fig-alt="A poster depicting genetic basis of migrations." fig-align="left" width=220%}
-
-It has been ages since we started migrating. First migration of modern humans from Africa dates back to 70,000 to 100,000 years ago. Yes, it has been a long time, and we still have not stopped migrating. However, the patterns, drivers, and impacts of migration have changed over time. This blog will explore the modern trends in migration through multiple lenses.
-
-> Which countries are the top destinations? Where do the large emigrating populations come from? Are there any national/ethnic/environmental reasons that explain migration of some populations? How are migrating populations connected to the economy of their birth countries and the destinations? Are there any policies that favor human mobility? 
 
 
 
@@ -34,11 +43,11 @@ The [dataset](https://stats.oecd.org/Index.aspx?DataSetCode=MIG) from OECD will 
 
 The OECD dataset has measures of non-native populations entering (inflows) and leaving(outflows) from top destinations. These measures are based on population registers, residence and/or work permits, and estimation from surveys.
 
-The general view of the the data in OECD dataset is shown in @tbl-Migration.
+The general view of the the data in OECD dataset is shown in @tbl-migration
 
 ```{python}
-#| label: tbl-Migration
-#| tbl-cap: Migration Flows
+#| label: tbl-migration
+#| tbl-cap: "Migration Flows"
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
@@ -52,12 +61,21 @@ flows_cleaned = flows.dropna(subset=['Value'])
 # dropping columns that we don't need
 flows_cleaned = flows.drop(columns=['Flag Codes', 'Flags'])
 flows_cleaned.head()
+
 ```
 
-The general overview of the remittance sent out by a country is shown in @tbl-Remittance.
+:::{.callout-note}
+The `variable` column containts two unique labels. `Inflows of foreign population by nationality` tells the number of people arriving at a `country` from their birth countries. `Outflows of foreign population by nationality` tells the number of non-native population leaving for their birth country from a `country`.
+:::
+
+The general overview of the remittance sent out by a country is shown in @tbl-remittance.
+
+::: {.callout-note}
+Remittance, in this context, is defined as the sum of money sent by a person working abroad back to their birth country. 
+:::
 
 ```{python}
-#| label: tbl-Remittance
+#| label: tbl-remittance
 #| tbl-cap: "Remittance Flows"
 import pandas as pd
 remitance = pd.read_excel("../data/outward-remittance-flows-brief-39-december-2023-revised-as-of-mar.8-2024_1.xlsx", header = 1, index_col= None)
@@ -65,11 +83,12 @@ remitance = remitance.dropna()
 remitance.head()
 ```
 
-Another dataset on remittance is for the remittance received by a country which is shown in @tbl-Remittance_in
+Another dataset on remittance is for the remittance received by a country which is shown in @tbl-remittance_in
 
 ```{python}
-#| label: tbl-Remittance_in
-#| tbl-cap: "Remittance Flows"
+#| label: tbl-remittance_in
+#| tbl-cap: "Remittance Inflows"
+
 remit_inward = pd.read_excel("../data/inward_remittance_flows_december_2023_1.xlsx")
 remit_inward = remit_inward.dropna()
 remit_inward.head()
@@ -78,7 +97,7 @@ remit_inward.head()
 We will use these datasets for the rest of our studies.
 
 :::{.callout-note}
-Migration can be understood as the movement of people in and out of a country. Moving in of non-native populations and moving out of native population can happen simultaneously.
+Migration can be understood as the movement of people in and out of a country. Moving in of non-native populations and moving out of native population can happen simultaneously in a country.
 :::
 
 ### Emigrating Population
@@ -186,12 +205,12 @@ plt.show()
 ```
 
 
-As shown in the figure @fig-overtime, there is no stark differences in total inflows over time among these countries expect in Germany. During 2015, there is a large inflows of foreign population compared to the previous years. According to a research, this was attributed to European refugee crisis "when the flow of migrants increased dramatically from 153,000 in 2008 to more than 1 million in 2015. This was mainly due to the growing number of Syrians, Iraqis, Libyans, Afghans and Eritreans fleeing war, ethnic conflict or economic hardship". [1] https://doi.org/10.1371%2Fjournal.pone.0284390 
+As shown in figure @fig-overtime, there is no stark differences in total inflows over time among these countries expect in Germany. During 2015, there is a large inflows of foreign population compared to the previous years. According to a research, this was attributed to European refugee crisis "when the flow of migrants increased dramatically from 153,000 in 2008 to more than 1 million in 2015. This was mainly due to the growing number of Syrians, Iraqis, Libyans, Afghans and Eritreans fleeing war, ethnic conflict or economic hardship". [1] https://doi.org/10.1371%2Fjournal.pone.0284390 
 
 
 #### Naturalization
 
-When we talk about the emigrating populations, naturalization is also part of a conversation. Naturalization is a process by wich a non-national citizen acquires the nationality of a certain country. The tendency to seek nationality in a country can have personal motives but it also can be reflective of the conditions in migrants' birth countries. For instance, migrants fleeing wars, ethnic discrimination, and climate disasters will likely seek permanent settlements in their new destinations. There are two players in this dynamics: the country granting citizenship and the country to which migrants belon to.  The @fig-granting shows the top five countries granting nationality over time. We have line graphs for eight countries, which means that five of these eight countries are the top five grantees of nationality in any given year from 2000-2022.
+When we talk about the emigrating populations, naturalization is also part of a conversation. Naturalization is a process by wich a non-national citizen acquires the nationality of a certain country. The tendency to seek nationality in a country can have personal motives but it also can be reflective of the conditions in migrants' birth countries. For instance, migrants fleeing wars, ethnic discrimination, and climate disasters will likely seek permanent settlements in their new destinations. There are two players in this dynamics: the country granting citizenship and the country to which migrants belong to.  The @fig-granting shows the top five countries granting nationality over time. We have line graphs for eight countries, which means that five of these eight countries are the top five grantees of nationality in any given year from 2000-2022.
 
 ```{python}
 #| label: fig-granting
@@ -375,29 +394,43 @@ plt.show()
 
 Some of the countries we studied tend to have increasing return populations (China, Romania, and Poland) while other countries (India, Mexico, and Italy) did not show any significant changes in the number of returning populations.
 
+::: {.callout-warning}
+The returning pupulation around 2020 falls to 0 for all the countries. This is most likely inconsistency in record keeping during the COVID-19.
+:::
+
 ### Economic Involvements of Migrating Population
 
 #### Employment Among Non-native Population
 
-One of the reason people move from one place/country to another is to seek employment opportunities. Without being employed, on the other hand, it might not be possible for an individual to survive in a new economy too. @Fig shows the employment rate among non-native population based on their education level.
+One of the reasons that can explain migration is the lack of employment opportunities in the birth countries of migrating populations. So migrating populations seek employment overseas. Without being employed, on the other hand, it might not be possible for an individual to survive in a new economy too. @fig-fbemployment shows the employment rate among non-native population based on their education level.
+
+@fig-fbemployment-1 shows the employment rate is more among highly-educated foreign-born populations compared to moderatly or low-educated poupulations. The ordered employment rate among foreign-born populations based on their education makes sense. Although we don't have data to explore in this blog, there has been research indicating that the migrating populations on average don't tend to impact the overall literacy rate of the places in which they are moving. Educated compensates for the uneducated. Next we will explore the employment rate based on gender.
 
 ```{python}
+#| label: fig-fbemployment
+#| fig-cap: "Total Employment Rate among Foreign-born Populations Over Time" 
+#| fig-subcap:
+#|   - "by Education"
+#|   - "by Gender" 
+#| layout-ncol: 2
+
 employment_by_place_edu = pd.read_csv("../data/MIG_EMP_EDUCATION_22022024161838929.csv")
+# dropping not needed columns
 employment_by_place_edu = employment_by_place_edu.drop(columns=employment_by_place_edu.columns[[12, 13, 15, 16]])
 
-
+# dropping some row values that we don't need.
 unwanted_values = ['Total', 'European Union (27 countries)', 'European Union (28 countries)']
 employment_by_place_edu = employment_by_place_edu[~employment_by_place_edu['Educational attainment'].isin(unwanted_values)]
 
 employment_by_place_edu = employment_by_place_edu.sort_values(by='Value', ascending=False)
 
-```
+# plotting figures 
 
+# by educational attainment
 
-```{python}
 employment_by_year = employment_by_place_edu[employment_by_place_edu['BIRTH'] != "NB"].groupby(['Year', 'Educational attainment'])['Value'].mean().reset_index()
 
-plt.figure(figsize=(12, 6))
+plt.figure(figsize=(6, 5))
 
 high_employment_rate = employment_by_year[employment_by_year['Educational attainment'] == "High"]
 medium_employment_rate = employment_by_year[employment_by_year['Educational attainment'] == "Medium"]
@@ -414,11 +447,9 @@ plt.ylabel('Employment Rate')
 plt.grid(True)
 plt.legend()
 plt.show()
-```
 
-@fig shows the employment rate based on their genders over time.
 
-```{python}
+# by gender
 employment_by_gender_birth = pd.read_csv("../data/employment_birth_sex.csv")
 employment_by_gender_birth['Country'] = employment_by_gender_birth['Country'].str.strip()
 
@@ -426,7 +457,7 @@ employment_by_gender_birth['Country'] = employment_by_gender_birth['Country'].st
 OECD_total = employment_by_gender_birth[employment_by_gender_birth['Country'] != "OECD - Total"]
 
 #plotting the emp rate
-plt.figure(figsize=(12, 6))
+plt.figure(figsize=(6, 5))
 
 male_employment_rate = OECD_total[(OECD_total['RATE'] == "N_RATE") & (OECD_total['Gender'] == 'Men') & (OECD_total['BIRTH'] == 'FB')]
 male_employment_rate = male_employment_rate.groupby('Year')['Value'].mean()
@@ -442,13 +473,15 @@ plt.xlabel('Year')
 plt.ylabel('Employment Rate')
 plt.grid(True)
 plt.legend()
-plt.savefig('../results/employment_rates_among_FB_gender.png', dpi=300, bbox_inches='tight')
 plt.show()
 ```
 
+ @fig-fbemployment-2 shows that the employment rate is more among male populations than the female counterparts. Some argues that employers prey on migrants and use them as low-wage workers while others argue that the migrants tolerate toxic behaviors in workplaces, decreasing the overall moral standards in the work environments. I will say why not to point out the overall ecnomic , both rewards and punishments, of locations in question that allow such tendencies. Such issues are the serious violations of human rights and morality and has to be further investigated.
+
+
 #### Remittance
 
-One of the often overlooked characteristics of migration is remittance. Remittance, in this context, is defined as the sum of money sent by a person working abroad back to their birth country. 
+One of the often overlooked characteristics of migration is remittance. Remittance, as mentioned earlier, is defined as the sum of money sent by a person working abroad back to their birth country.
 
 The @fig shows the top 10 nations recieving money from their citizens working abroad. This is consistend with emigrating population as well. India, Mexico, and China were top moving populations during 2000-2020.
 
