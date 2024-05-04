@@ -1,6 +1,7 @@
 ---
-title: "Where Are We Going? Tracing the Ever-Evolving Tale of Human Migration"
-subtitle: "Nischal Bhandari"
+title: "Where Are We Going?"
+subtitle: "**Tracing the Ever-Evolving Tale of Human Migration**"
+author: "Nischal Bhandari"
 bibliography: references.bib
 number-sections: false
 format:
