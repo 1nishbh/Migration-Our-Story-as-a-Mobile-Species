@@ -539,7 +539,7 @@ Just because a country is receiving huge sum of money as a remittance does not n
 #| label: fig-remdep
 #| fig-cap: "Top countries where GDP hugely depends on remittance"
 top_10_gdp = remit_inward.nlargest(20, "% of GDP in 2023")
-fig, ax = plt.subplots(figsize=(18, 6))
+fig, ax = plt.subplots(figsize=(8, 6))
 
 top_10_gdp_sorted = top_10_gdp.sort_values('% of GDP in 2023', ascending=True)
 top_10_gdp_sorted.plot(y='% of GDP in 2023', x='Remittance inflows (US$ million)', kind='barh', ax=ax, color='teal', legend=False)
@@ -547,7 +547,6 @@ ax.set_xlabel('% of GDP Remittance Contributed in 2023')
 ax.set_ylabel('Countries')
 ax.set_title('Remittance Inflows as Percentage of GDP in 2023')
 ax.set_yticklabels(top_10_gdp_sorted['Remittance inflows (US$ million)'])
-plt.savefig("../results/Top 10 Countries by Remittance Inflows as % of their GDP in 2023.png")
 plt.show()
 ```
 
