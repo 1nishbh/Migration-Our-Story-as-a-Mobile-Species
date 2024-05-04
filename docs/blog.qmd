@@ -19,7 +19,7 @@ jupyter: python3
 
 Haven't we all thought about moving to another location during several occasions in our lives? Probably, more than once. May be we got a better job offer in another city or a country. Maybe our country is devasted by wars and ethnic conflicts, and we don't feel safe in its territory. Maybe our place faced severe climatic conditions, and there remained no means to sustain a life. For one reason or another, humans have been moving across the globe. Our ancestors moved around engaging in business, seeking favorable climatic conditions, waging wars, and building settlements. As a species, humans tend to be a very mobile species.
 
-It has been ages since we started migrating. First migration of modern humans from Africa dates back to 70,000 to 100,000 years ago. Yes, it has been a long time, and we still have not stopped migrating. However, the patterns, drivers, and impacts of migration have changed over time. Even within a given period of time, the reasons behind why people move vary from person to person. We all have personal story behind why we leave the accustomed place and people behind to start anew at an unfamiliar place. In some cases the prospects of an prosperous life at a destination can be more attractive while in other cases the reality at the current residence can be dreadful, both driving migrations among people. While it is impossible to track the personal stories of every migrating individual, because of the collective systems in which we live and behave, it is possible to study and generalize the overall story of how and why we migth be migrating. This blog is an attempt to explore the modern trends in migrations since 2000 till 2022 with respect to economy, socio-political conflicts, and human rights of displaced populations.
+It has been ages since we started migrating. First migration of modern humans from Africa dates back to 70,000 to 100,000 years ago. Yes, it has been a long time, and we still have not stopped migrating. However, the patterns, drivers, and impacts of migration have changed over time. While it is impossible to track the personal stories of every migrating individual, because of the collective systems in which we live and behave, it is possible to study and generalize the overall story of how and why we might be migrating. This blog is an attempt to explore the modern trends in migrations since 2000 till 2022 with respect to economy, socio-political conflicts, and human rights of displaced populations.
 
 ::: {.callout-note icon=false}
 
@@ -484,9 +484,12 @@ plt.show()
 
 One of the often overlooked characteristics of migration is remittance. Remittance, as mentioned earlier, is defined as the sum of money sent by a person working abroad back to their birth country.
 
-The @fig shows the top 10 nations recieving money from their citizens working abroad. This is consistend with emigrating population as well. India, Mexico, and China were top moving populations during 2000-2020.
+The @fig-remit10 shows the top 10 nations recieving money from their citizens working abroad. This is consistend with emigrating population as well. India, Mexico, Philippines, and China were top moving populations during 2000-2020 as shown in@fig-topmeans.
 
 ```{python}
+
+#| label: fig-remit10
+#| fig-cap: ""
 # remittance inward flow
 
 remit_inward = pd.read_excel("../data/inward_remittance_flows_december_2023_1.xlsx")
@@ -530,11 +533,13 @@ plt.savefig("../results/top_10_remittance_inflows_bar_variable_width_small.png",
 plt.show()
 ```
 
-There might be countries which are much more dependent on the remittance as shown in @fig-
+Just because a country is receiving huge sum of money as a remittance does not necessarily mean that the country is relying in remittance. Some countries have larger economies and populations where even the huge remittance does not contribute much to the whole. One of such factor to account for the contribution to the economy of a country is to look at how much remittance contributed towards the GDP. There might be countries which are much more dependent on the remittance even though they don't have much populations working abroad as shown in @fig-remdep.
 
 ```{python}
+#| label: fig-remdep
+#| fig-cap: "Top countries where GDP hugely depends on remittance"
 top_10_gdp = remit_inward.nlargest(20, "% of GDP in 2023")
-fig, ax = plt.subplots(figsize=(18, 8))
+fig, ax = plt.subplots(figsize=(18, 6))
 
 top_10_gdp_sorted = top_10_gdp.sort_values('% of GDP in 2023', ascending=True)
 top_10_gdp_sorted.plot(y='% of GDP in 2023', x='Remittance inflows (US$ million)', kind='barh', ax=ax, color='teal', legend=False)
@@ -546,15 +551,41 @@ plt.savefig("../results/Top 10 Countries by Remittance Inflows as % of their GDP
 plt.show()
 ```
 
+@fig-remdep shows the countries hugely relying on remittance for their GDP for the fiscal year 2023.
+
+:::{.callout-caution}
+It is important to take all the conclusions made based on the total number with caution. A country from where 60% of population are leaving can still have less migrations in number compared to a country with bigger population from where only 5% of its total population are moving. The former case is more alarming even if fewer people are migrating. So studying in terms of more representative measures (ratio to the total population) will be more scientific. 
+:::
+
 ### Sentiments
 
-For the sentimental analysis, texts were extracted from PDF files. The NTLK library tokenizes the text, and uses the NRC Emotion Lexicon to identify and count the emotions associated with the words in the text. The sentiment scores across multiple PDFs were aggregated, collects words associated with each sentiment, and visualized the overall sentiment distribution in the @fig-sentiment
+For the sentimental analysis, texts were extracted from few selected PDF files #tip-1. The NTLK library tokenizes the text, and uses the NRC Emotion Lexicon to identify and count the emotions associated with the tokenized words in the text. The sentiment scores across multiple PDFs were aggregated and visualized the overall sentiment distribution in the @fig-sentiment
 
-![Sentiment Analysis](sentimental_disstribution.png){#fig-sentiment}
+![Sentiment Analysis](sentimental_disstribution%20copy.png){#fig-sentiment}
 
-@fig-cloud
-![Word Cloud](wordcloud_high_quality.png){#fig-cloud}
+This pie chart provides an overview of the emotional landscape surrounding the topic of migration. It is limited by the choices of article and is subjective analysis. The chart shows that 28.8% of the data reflects positive sentiments. The next largest segment associated with trust, 14.4% of the data. The percentages for negative sentiments (12.6%) is quite low compared to the positive sentiments which is surprising given the negativities surrounding migration in every day news.
 
+
+In addition to the sentimental analysis, @fig-worded showcases various concepts and themes related to migration and immigration. 
+
+![Word Cloud from the select-articles](wordcloud_high_quality.png){#fig-worded}
+
+The most prominent words include "migration", "international", "million", "nations", "department", "economic", "area", "region", "global" etc. Some words highlight specific geographic regions like "southern asia", "middle income countries", "sub-saharan africa", "latin america", and "united nations". The word cloud also features terms associated with migration drivers, impacts, and related factors such as "development", "conflict", "diaspora", "factor", "emigration", "remittance", "income", "population", "policy", and "condition". Words like "refugees", "asylum seekers", "increase", "change", and "effect" suggest themes around the scale and consequences of migration.
+
+Overall, this word cloud provides an overview of the diverse topics and concepts connected to the complex phenomenon of international migration, including its underlying causes, geographic patterns, economic dimensions, policy implications, and human impacts.
+
+::: {.callout-tip title="Articles used in this analysis" collapse="true"}
+* [UK starts detaining asylum seekers to be deported to Rwanda](https://www.aljazeera.com/news/2024/5/1/uk-starts-detaining-asylum-seekers-to-be-deported-to-rwanda)
+*  [A quieter border eases pressure on Biden, with a hand from Mexico](https://www.washingtonpost.com/immigration/2024/04/30/united-states-mexico-border-surge-biden/)
+* [German immigration policy: What's changing in 2024?](https://www.dw.com/en/german-immigration-policy-whats-changing-in-2024/a-67753472)
+* [Nearly 900 Million Worldwide Wanted to Migrate in 2021](https://news.gallup.com/poll/468218/nearly-900-million-worldwide-wanted-migrate-2021.aspx)
+* Mcewan, C. (2004). Transnationalism. In A Companion to Cultural Geography (eds J.S. Duncan, N.C. Johnson and R.H. Schein). https://doi.org/10.1002/9780470996515.ch32
+* [MIGRATION AND TRANSNATIONALISM: OPPORTUNITIES AND CHALLENGES](https://www.iom.int/sites/g/files/tmzbdl486/files/jahia/webdav/shared/shared/mainsite/microsites/IDM/workshops/migration_and_transnationalism_030910/background_paper_en.pdf)
+* [The Future of Migration](https://www.dni.gov/files/images/globalTrends/GT2040/NIC-2021-02486--Future-of-Migration--Unsourced--14May21.pdf)
+* [Is migration good for the economy?](https://www.oecd.org/migration/OECD%20Migration%20Policy%20Debates%20Numero%202.pdf)
+* [International Migration: Drivers, Factors and Megatrends](https://www.icmpd.org/file/download/51472/file/Policy%2520Paper%2520-%2520Geopolitical%2520Outlook%2520on%2520International%2520Migration.pdf)
+* [International Migration 2020 Highlights](https://www.un.org/development/desa/pd/sites/www.un.org.development.desa.pd/files/undesa_pd_2020_international_migration_highlights.pdf)
+:::
 
 ### Differences in Migrations across years and Countries 
 
