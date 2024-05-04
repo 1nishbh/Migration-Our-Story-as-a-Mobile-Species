@@ -484,7 +484,7 @@ plt.show()
 
 One of the often overlooked characteristics of migration is remittance. Remittance, as mentioned earlier, is defined as the sum of money sent by a person working abroad back to their birth country.
 
-The @fig-remit10 shows the top 10 nations recieving money from their citizens working abroad. This is consistend with emigrating population as well. India, Mexico, Philippines, and China were top moving populations during 2000-2020 as shown in@fig-topmeans.
+The @fig-remit10 shows the top 10 nations recieving money from their citizens working abroad. This is consistend with emigrating population as well. India, Mexico, Philippines, and China were top moving populations during 2000-2020 as shown in @fig-topmeans.
 
 ```{python}
 
