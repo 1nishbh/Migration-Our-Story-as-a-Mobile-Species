@@ -11,7 +11,6 @@ format:
     code-fold: true
     code-tools: true
     toc: true
-  pdf: default
 jupyter: python3
 ---
 
@@ -558,22 +557,23 @@ It is important to take all the conclusions made based on the total number with 
 
 ### Sentiments
 
-For the sentimental analysis, texts were extracted from few selected PDF files #tip-1. The NTLK library tokenizes the text, and uses the NRC Emotion Lexicon to identify and count the emotions associated with the tokenized words in the text. The sentiment scores across multiple PDFs were aggregated and visualized the overall sentiment distribution in the @fig-sentiment
+For the sentimental analysis, texts were extracted from few selected PDF files #tip-articles. The NTLK library tokenizes the text, and uses the NRC Emotion Lexicon to identify and count the emotions associated with the tokenized words in the text. The sentiment scores across multiple PDFs were aggregated and visualized the overall sentiment distribution in the @fig-sentiment
 
 ![Sentiment Analysis](sentimental_disstribution%20copy.png){#fig-sentiment}
 
-This pie chart provides an overview of the emotional landscape surrounding the topic of migration. It is limited by the choices of article and is subjective analysis. The chart shows that 28.8% of the data reflects positive sentiments. The next largest segment associated with trust, 14.4% of the data. The percentages for negative sentiments (12.6%) is quite low compared to the positive sentiments which is surprising given the negativities surrounding migration in every day news.
+This pie chart provides an overview of the emotional landscape surrounding the topic of migration. It is limited by the choices of article and is subjective analysis. The chart shows that 28.8% of the data reflects positive sentiments. The next largest sentiment is trust, 14.4% of the data. The percentages for negative sentiments (12.6%) is quite low compared to the positive sentiments which is surprising given the negativities surrounding migration in every day news.
 
 
-In addition to the sentimental analysis, @fig-worded showcases various concepts and themes related to migration and immigration. 
+In addition to the sentimental analysis, @fig-worded showcases various concepts and themes related to migration. 
 
 ![Word Cloud from the select-articles](wordcloud_high_quality.png){#fig-worded}
 
-The most prominent words include "migration", "international", "million", "nations", "department", "economic", "area", "region", "global" etc. Some words highlight specific geographic regions like "southern asia", "middle income countries", "sub-saharan africa", "latin america", and "united nations". The word cloud also features terms associated with migration drivers, impacts, and related factors such as "development", "conflict", "diaspora", "factor", "emigration", "remittance", "income", "population", "policy", and "condition". Words like "refugees", "asylum seekers", "increase", "change", and "effect" suggest themes around the scale and consequences of migration.
 
-Overall, this word cloud provides an overview of the diverse topics and concepts connected to the complex phenomenon of international migration, including its underlying causes, geographic patterns, economic dimensions, policy implications, and human impacts.
+This word cloud provides an overview of the diverse topics and concepts interlinked with the complex phenomenon of international migration, including its underlying causes ("labour"), geographic patterns ("southern asia", "sub-saharan africa", "latin america""), economic dimensions("remittance", "income"), policy implications ("policy", "united nations" ), and human impacts ("conflict", "family", "refugees", "asylum seekers").
 
-::: {.callout-tip title="Articles used in this analysis" collapse="true"}
+ 
+
+::: {#tip-articles .callout-tip title="Articles used in this analysis" collapse="true"}
 * [UK starts detaining asylum seekers to be deported to Rwanda](https://www.aljazeera.com/news/2024/5/1/uk-starts-detaining-asylum-seekers-to-be-deported-to-rwanda)
 *  [A quieter border eases pressure on Biden, with a hand from Mexico](https://www.washingtonpost.com/immigration/2024/04/30/united-states-mexico-border-surge-biden/)
 * [German immigration policy: What's changing in 2024?](https://www.dw.com/en/german-immigration-policy-whats-changing-in-2024/a-67753472)
@@ -588,14 +588,16 @@ Overall, this word cloud provides an overview of the diverse topics and concepts
 
 ### Differences in Migrations across years and Countries 
 
+It was very interesting to see the overall trend since 2000 in migration patterns in the above sections. It would further be interesting to analyze if there are certain years or countries that shares the same pattern on how people move. For this K-means clustering was used from scikit-learn library. It was figured out that the four clusters tend to account the overall variability in the number of moving populations: clusters with lower differences in observations within the same clusters but higher inter-cluster differences.
 
 ```{python}
-df = inflows_cleaned[['Country of birth/nationality', 'Country', 'Year', 'Value']]
+#| label: fig-kmeans
+#| fig-cap: "Observations grouped in K-means Clusters for every year"
+df = inflows_cleaned[['Country of birth/nationality', 'Country', 'Year', 'Value']].copy()
 
 # k means clustering
 from sklearn.cluster import KMeans
 from sklearn.preprocessing import StandardScaler
-
 
 # specifying the number of clusters (k)
 k = 4
@@ -605,27 +607,15 @@ kmeans = KMeans(n_clusters=k)
 kmeans.fit(df[['Value']])
 
 # Add cluster labels to the DataFrame
-df['cluster_label'] = kmeans.labels_ 
+df['cluster_label'] = kmeans.labels_.astype(int) #confounding them as integer show that can be ordered
+
+# Reorder cluster labels so that label '3' corresponds to the largest observations
+df.loc[:, 'cluster_label'] = df['cluster_label'].map({
+    label: idx for idx, label in enumerate(np.argsort(kmeans.cluster_centers_.flatten()))
+})
 
 # Visualize the clusters
-plt.figure(figsize=(10, 6))
-
-# Plot data points
-plt.scatter(df['Value'], [0]*len(df), c=df['cluster_label'], cmap='viridis', alpha=0.5, marker='.')
-
-# Plot centroids
-centroids = kmeans.cluster_centers_
-plt.scatter(centroids, [0]*k, marker='x', s=100, color='red')
-
-plt.title('K-means Clustering of Countries based on Outflowing Population')
-plt.xlabel('Normalized Outflowing Population')
-plt.yticks([])  # Remove y-axis ticks
-plt.show()
-```
-
-
-```{python}
-plt.figure(figsize=(10, 8))
+plt.figure(figsize=(9, 7))
 scatter = plt.scatter(df['Value'], df['Year'], c=df['cluster_label'])
 
 unique_labels = np.unique(df['cluster_label'])
@@ -644,17 +634,23 @@ for label, color in cluster_colors.items():
 
 plt.legend(loc='upper right', scatterpoints=1, title='Clusters')
 
-plt.xlabel('Value')
+plt.xlabel('Migration Values for a given year')
 plt.ylabel('Year')
 plt.title('K-means Clusters of Countries')
 
 plt.show()
-
-
 ```
 
+@fig-kmeans shows almost consistent patterns in migrating populations throughout the years. Cluster 0 to CLuster 3 are odered in ascending order, indicating the total number of people moving from a country to another. Years before 2005 have few observations in cluster 3, meaning there were not that many migrations in huge numbers. From 2015-2020 there are some observations that are very different from others, even if they belong to the same cluster 3. Even if we don't see any pattern through cluster 0, 1, and 2, cluster 3 shows some patterns across years: fewer large mirations before 2005, similar large migrations in 2005-2015, and few larger migrations around 2015-2020. 
+
+In addition to years, we will also look at the patterns among destination countries. Note that our data only covers OECD countries as potential destinations for migrants.
+
 ```{python}
-plt.figure(figsize=(10, 20))
+#| label: fig-kmeans_country
+#| fig-cap: "Observations grouped in K-means Clusters for destinations"
+
+# doing the figure for destinations
+plt.figure(figsize=(9, 18))
 scatter = plt.scatter(df['Value'], df['Country'], c=df['cluster_label'])
 
 unique_labels = np.unique(df['cluster_label'])
@@ -673,16 +669,37 @@ for label, color in cluster_colors.items():
 
 plt.legend(loc='upper right', scatterpoints=1, title='Clusters')
 
-plt.xlabel('Value')
-plt.ylabel('Country')
+plt.xlabel('Migration Values for a destination')
+plt.ylabel('Destinations')
 plt.title('K-means Clusters of Countries')
-
 plt.show()
 ```
 
-### Schengen vs Non-Schengen: An Analysis of differing philosophies in human mobility
+@fig-kmeans_country shows different countries have differing movements over time. Only few countries have observations in cluster 3 which represents largest moving populations. We can look into the clusters that classifiy the movements to countries.
 
 ```{python}
+# similar countries based on immigrant's inflow
+for cluster in df['cluster_label'].unique():
+    print(f"Cluster {cluster}:")
+    print(df[df['cluster_label'] == cluster]['Country'].unique().tolist())
+```
+
+Only 'Japan', 'Korea', 'Canada', 'United States', 'Germany', 'Italy', 'Spain', 'Poland', and 'Chile' are in cluster 3. This is consistent with our findings in earlier sections. These countries tend to be the top destinations for migrants. In addition, in @fig-kmeans we saw that after 2015, there were big movements for some countries. From @fig-kmeans_country, it can be deduced that Germany and United States can be the countries that have largest inflows. These two figures can be coupled to study the patterns of moving populations.
+
+
+### Schengen vs Non-Schengen: An Analysis of differing philosophies in human mobility
+
+ To understand the evolution of socioeconomic trends and transnational links, it is important to understand how migration trends differ from one country to another, or from one region to another. In this section we examine the complexity of migration trends and clarify the implications of various mobility philosophies.
+
+We will analyze the different views on migration trends between Schengen countries with borderless travel among participating European nations and control nations with more conventional immigration policy. We wily only use a subset of five non-schengen countries--'Australia', 'Canada', 'Japan', 'New Zealand', 'United States'--and five schengen countries--'Germany', 'France', 'Greece', 'Spain', 'Italy'. 
+
+```{python}
+#| label: fig-schen
+#| fig-cap: "Comparision of inflowing populations in schengen and non-schengen countries"
+
+import warnings
+warnings.filterwarnings('ignore')
+
 flows = pd.read_csv("../data/inflows of foreign population by nationality.csv", low_memory=False)
 
 flows = flows.dropna(subset=['Value'])
@@ -705,21 +722,19 @@ def is_schengen(country):
         return 'Schengen'
     else:
         return 'Non_Schengen'
-```
 
-```{python}
-schengen_non['Schengen'] = schengen_non['Country'].apply(is_schengen)
+# applying the func
+schengen_non.loc[:, 'Schengen'] = schengen_non['Country'].apply(is_schengen)
 # Filter the DataFrame to include only the rows where the variable is 'Inflows of foreign population by nationality'
 inflows_df = schengen_non[schengen_non['Variable'] == 'Inflows of foreign population by nationality']
 outflows_df = schengen_non[schengen_non['Variable'] == 'Outflows of foreign population by nationality']
 
 # Group the data by the 'Schengen' column and calculate the total migration flow for each group
 migration_comparison = inflows_df.groupby('Schengen')['Value'].sum()
-```
 
-```{python}
+# plotting
 # emigrating population
-fig, ax = plt.subplots(figsize=(10, 6))
+fig, ax = plt.subplots(figsize=(9, 6))
 
 colors = ['b' if s == 'Schengen' else 'r' for s in inflows_df['Schengen']]
 
@@ -736,15 +751,20 @@ non_schengen = ax.scatter(inflows_df.loc[inflows_df['Schengen'] == 'Non_Schengen
 ax.legend(handles=[schengen, non_schengen])
 
 ax.set_xlabel('Year')
-ax.set_ylabel('Value')
-ax.set_title('Inflows of foreign population')
-
+ax.set_ylabel('Emigrating Population')
+ax.set_title('Total Inflows of foreign population')
 plt.show()
 ```
 
+We shown in @fig-schen, throughout the years, there is not much differences in inflows of foreign population among the selected schengen and non-schengen countries. From previous sections, we can say Germany is the schengen country with largest migrations around 2015. The non-schengen country with slightly lower inflowing population is probably United States. 
+
+
 ```{python}
+#| label: fig-schen_out
+#| fig-cap: "Comparision of returning populations from schengen and non-schengen countries"
+
 # foreign_population leaving
-fig, ax = plt.subplots(figsize=(10, 6))
+fig, ax = plt.subplots(figsize=(9, 6))
 
 colors = ['b' if s == 'Schengen' else 'r' for s in outflows_df['Schengen']]
 
@@ -761,15 +781,31 @@ non_schengen = ax.scatter(outflows_df.loc[outflows_df['Schengen'] == 'Non_Scheng
 ax.legend(handles=[schengen, non_schengen])
 
 ax.set_xlabel('Year')
-ax.set_ylabel('Value')
+ax.set_ylabel('Returning Population')
 ax.set_title('Outflows of foreign population')
 
 plt.show()
 ```
 
-# Limitations and Conclusions
-Data collected during/after the COVID years is not complete. 
-Data on undocumented migrations was not studied for this research.
+@fig-schen_out shows some pattern in the return of non-native populations between schengen and non-schengen countries. There tend to be more return from multiple schengen countries. We have seen multiple larger return from schengen countries in @fig-returns-total as well. This can have multiple explanations. Schengen countries tend to get more migrants from other schengen countries while countries like US and Canada tend to have inter-continental migrants. These sort of migration patterns can also explain the mindsets of migrants when it comes to returning to their birth countries.
+
+# Conclusions
+
+The blog revealed several notable patterns and trends in global migration dynamics over the past two decades. Countries like the United States and Germany consistently emerged as major destinations, attracting significant inflows from a multiple countries. Interestingly, migrants fleeing political unrest and economic instability tended to seek naturalization in their destinations, while migrants from relatively stable countries generally exhibited a higher tendency to return to their home nations.
+
+There is also interlinks between migrations and economic factors, as showed by the strong correlation between remittance inflows and countries with substantial emigrant populations. The analysis of research papers related to migration revealed a predominance of positive sentiments, potentially reflecting a growing recognition of the multifaceted benefits associated with human mobility.
+
+Factors like climate change, conflicts, and shifting economic opportunities are likely to shape future migration trajectories, necessitating adaptive policies and international cooperation to address the multifaceted challenges and opportunities associated with human mobility. Continued research, data collection, and policy dialogue will be essential in navigating the evolving migration landscape and promoting sustainable and equitable outcomes for both migrant populations and host communities.
+
+# Limitations
+
+While this analysis provides insights into global migration patterns and trends, it is important to acknowledge certain limitations in the data and methodology employed. The datasets used in this analysis primarily cover OECD countries and may not capture the full extent of migration dynamics in non-OECD regions. Additionally, data collection during and after the COVID-19 pandemic years appears to be incomplete, potentially affecting the accuracy of recent migration figures.
+
+The data sources utilized in this study do not account for undocumented or irregular migration, which can be a significant component of overall migration flows in certain regions or countries. While the analysis identifies patterns and correlations between migration flows and various factors such as economic conditions, conflicts, and policy changes, it does not establish definitive causal relationships or explore the complex motivations and decision-making processes underlying individual migration decisions.
+
+The analysis primarily focuses on the period from 2000 to 2022, which may not fully capture long-term historical trends or potential future shifts in migration patterns due to evolving global dynamics. Additionally, the analysis primarily focuses on international migration, but does not delve into internal migration dynamics within countries, which can also significantly impact population distributions and socioeconomic factors.
+
+Due to the nature of the data sources, the analysis primarily relies on aggregated migration figures at the national level, potentially neglecting nuances and variations within countries or specific regions. Despite these limitations, the analysis provides valuable insights into global migration trends and highlights areas for further exploration and research. Future studies could benefit from incorporating additional data sources, exploring qualitative factors influencing migration decisions, and employing more granular spatial and temporal analyses to gain a more comprehensive understanding of this complex phenomenon.
 
 
 ## Additional Figures
