@@ -2,9 +2,8 @@
 
 This repository contains a collection of Jupyter Notebooks for analyzing various aspects of migration data, including employment, education, nationality acquisition, remittances, and sentiment analysis. 
 **Check out the blog here**
-```markdown
-[Where Are We Going?](https://nishbh01.github.io/Migration-Our-Story-as-a-Mobile-Species/blog.html ".." target="_blank")
-```
+
+[Where Are We Going?](https://nishbh01.github.io/Migration-Our-Story-as-a-Mobile-Species/blog.html "Migration: Our Story as a Mobile Species" target="_blank")
 
 
 ## Project Overview
