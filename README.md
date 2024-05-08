@@ -1,7 +1,10 @@
 # Where Are We Going? Tracing the Ever-Evolving Tale of Human Migration
 
 This repository contains a collection of Jupyter Notebooks for analyzing various aspects of migration data, including employment, education, nationality acquisition, remittances, and sentiment analysis. 
-[**Check out the blog here**](https://nishbh01.github.io/Migration-Our-Story-as-a-Mobile-Species/blog.html)
+**Check out the blog here**
+```markdown
+[Where Are We Going?](https://nishbh01.github.io/Migration-Our-Story-as-a-Mobile-Species/blog.html ".." target="_blank")
+```
 
 
 ## Project Overview
@@ -32,7 +35,7 @@ Each Jupyter Notebook in this repository serves a different purpose. You can exp
 - data/: Directory with data files used in this analysis.
 - docs/: Directory for documentation files.
 - results/: Directory for storing analysis results or generated figures/files.
-- src/:
+- src/: Directory with all the source code used for this analysis.
     - clustering.ipynb: Notebook for performing clustering tasks on migration data.
 
     - employemnt_place_of_birth_eduction.ipynb: Notebook for analyzing employment among non-native population based on their education attainment
@@ -49,9 +52,6 @@ Each Jupyter Notebook in this repository serves a different purpose. You can exp
 
     - sentimental_analysis.ipynb: Notebook for performing sentiment analysis on migration-related text data.
 
-    - forecasting.ipynb: Notebook for forecasting future migration trends. (not working)
-
-
 
 - environment.yml: File for managing the project's environment and dependencies.
 
@@ -63,4 +63,4 @@ Contributions to this project are welcome. If you find any issues or have sugges
 N/A
 
 ## Contact
-For any questions or inquiries, please contact me at [nbhanda1@ramapo.edu].
+For any questions or inquiries, please contact me at nbhanda1@ramapo.edu.
