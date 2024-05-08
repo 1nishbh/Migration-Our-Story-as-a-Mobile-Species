@@ -7,13 +7,13 @@ This repository contains a collection of Jupyter Notebooks for analyzing various
 
 
 ## Project Overview
-The Migration Data Analysis project aims to provide a comprehensive set of tools and analyses for understanding migration patterns, employment trends, sentiment towards migration, and other related topics.
+The project aims to provide a comprehensive set of tools and analyses for understanding migration patterns, employment trends, sentiment towards migration, and other related topics.
 
-It includes various notebooks that cover tasks such as clustering, forecasting, nationality acquisition, remittance analysis, and more.
+It includes various notebooks that cover tasks such as clustering, visualizations for migration flows, nationality acquisition, remittance analysis, and more.
 
 ## Installation
 
-To run the notebooks and scripts in this repository, you need to have Python and Jupyter Notebook installed on your system. Additionally, you may need to install specific Python packages depending on the requirements of each notebook or script.
+To run the notebooks in this repository, you need to have Python and Jupyter Notebook installed on your system. Additionally, you may need to install specific Python packages depending on the requirements of each notebook or script.
 
 1. Clone the repository:
 ```
@@ -27,7 +27,7 @@ cd migration-data-analysis
 or open mannually in your editor. 
 
 ## Usage
-Each Jupyter Notebook in this repository serves a different purpose. You can explore and run them individually based on your specific needs. (For example, to run the classification.ipynb notebook, open it in Jupyter Notebook and execute the cells sequentially.)
+Each Jupyter Notebook in this repository serves a different purpose. You can explore and run them individually based on your specific needs. (For example, to run the clustering.ipynb notebook, open it in Jupyter Notebook and execute the cells sequentially.)
 
 ## File Structure
 
