@@ -16,9 +16,9 @@ jupyter: python3
 
 ![Photograph: Zakir Hossain Chowdhury / Barcro](https://u4d2z7k9.rocketcdn.me/wp-content/uploads/2019/02/villagers-dried-river-bed.jpg){fig-alt="Villagers on dried river bed in Satkhira, Bangladesh." width="100%"}
 
-Haven't we all thought about moving to another location during several occasions in our lives? Probably, more than once. May be we got a better job offer in another city or a country. Maybe our country is devasted by wars and ethnic conflicts, and we don't feel safe in its territory. Maybe our place faced severe climatic conditions, and there remained no means to sustain a life. For one reason or another, humans have been moving across the globe. Our ancestors moved around engaging in business, seeking favorable climatic conditions, waging wars, and building settlements. 
+Haven't we all thought about moving to another location during several occasions in our lives? Probably, more than once. May be we got a better job offer in another city or a country. Maybe our country is devasted by wars and ethnic conflicts, and we don't feel safe in its territory. Maybe our place faced severe climatic conditions, and there remained no means to sustain life. For one reason or another, humans have been moving across the globe. Our ancestors moved around engaging in business, seeking favorable climatic conditions, waging wars, and building settlements. 
 
-As a species, humans tend to be a very mobile species. It has been ages since we started migrating. First migration of modern humans from Africa dates back to 70,000 to 100,000 years ago. Yes, it has been a long time, and we still have not stopped migrating. However, the patterns, drivers, and impacts of migration have changed over time. While it is impossible to track the personal stories of every migrating individual, because of the collective systems in which we live and behave, it is possible to study and generalize the overall story of how and why we might be migrating. This blog is an attempt to explore the modern trends in migrations since 2000 till 2022 with respect to economy, socio-political conflicts, and human rights of displaced populations.
+As a species, humans tend to be a very mobile species. It has been ages since we started migrating. The first migration of modern humans from Africa dates back to 70,000 to 100,000 years ago. Yes, it has been a long time, and we still have not stopped migrating. However, the patterns, drivers, and impacts of migration have changed over time. While it is impossible to track the personal stories of every migrating individual, because of the collective systems in which we live and behave, it is possible to study and generalize the overall story of how and why we might be migrating. This blog is an attempt to explore the modern trends in migrations since 2000 till 2022 with respect to economy, socio-political conflicts, and human rights of displaced populations.
 
 ::: {.callout-note icon=false}
 
@@ -27,7 +27,7 @@ As a species, humans tend to be a very mobile species. It has been ages since we
 * Which countries are the top destinations? 
 * Where do the large emigrating populations come from?
 * Which migrating populations are seeking naturalization in their destinations? 
-* Are there any national/ethnic/environmental reasons that explain migration of some populations? 
+* Are there any national/ethnic/environmental reasons that explain the migration of some populations? 
 * How are migrating populations connected to the economy of their birth countries and the destinations? 
 * Are there any policies that favor human mobility? 
 
@@ -39,12 +39,12 @@ As a species, humans tend to be a very mobile species. It has been ages since we
 
 # Data Description
 
-The datasets that will be used to study the migration dynamics will be obtained from "Organization of Economic Cooperation and Development (OECD)" and "The Global Knowledge Partnership on Migration and Development (KNOMAD)".
-The [dataset](https://stats.oecd.org/Index.aspx?DataSetCode=MIG) from OECD will contain the migration rate--recorded as the number of individuals migrating from one country to another--across 2000-2022 where as [KNOMAD's datasets](https://www.knomad.org/data/remittances) contains the information about the remittance of a country. *Remittance is the capital received by a country from their native populations working overseas*.
+The datasets that will be used to study the migration dynamics will be obtained from the "Organization of Economic Cooperation and Development (OECD)" and the "The Global Knowledge Partnership on Migration and Development (KNOMAD)".
+The [dataset](https://stats.oecd.org/Index.aspx?DataSetCode=MIG) from OECD will contain the migration rate--recorded as the number of individuals migrating from one country to another--across 2000 to 2022 where as [KNOMAD's datasets](https://www.knomad.org/data/remittances) contains the information about the remittance of a country. *Remittance is the capital received by a country from their native populations working overseas*.
 
-The OECD dataset has measures of non-native populations entering into (inflows) and leaving from (outflows) top destinations. These measures are based on population registers, residence and/or work permits, and estimation from surveys.
+The OECD dataset has measures of non-native populations entering into (inflows) and leaving from (outflows) the top destinations. These measures are based on population registers, residence and/or work permits, and estimation from surveys.
 
-The general view of the the data in OECD dataset is shown in @tbl-migration
+The general view of the data in OECD dataset is shown in @tbl-migration
 
 ```{python}
 #| label: tbl-migration
@@ -66,7 +66,7 @@ flows_cleaned.head()
 ```
 
 :::{.callout-note}
-The `variable` column containts two unique labels. `Inflows of foreign population by nationality` tells the number of people arriving at a `country` from their birth countries. `Outflows of foreign population by nationality` tells the number of non-native population leaving for their birth country from a `country`.
+The `variable` column contains two unique labels. `Inflows of foreign population by nationality` tells the number of people arriving at a `country` from their birth countries. `Outflows of foreign population by nationality` tells the number of non-native population leaving for their birth country from a `country`.
 :::
 
 The general overview of the remittance sent out by a country is shown in @tbl-remittance.
@@ -113,7 +113,7 @@ Migration can be understood as the movement of people in and out of a country. M
 :::
 
 
-Emigrating population can be defined as the population that is leaving their native country and is moving into a new country. The reasons and motive for such ouflows can be several, inclduing employment opportunities, political conflicts, refugees, and so on. The datasets we are using in this project does not have comprehensive information to study the actual reasons behind the migrations, but we will later look into employment opportunities in countries that recieve highest number of emigrants. Other reasons can also be empirically implied based on the conditions at the time of migration in their former countries. For instance, we can expect a bigger number of population leaving a country with ongoing war or political conflcts or a climate disaster. First, let's see the general trend in emigrating population. The @fig-inflows shows the total number of foreign people arriving in a destination (for instance, United States) over time. 
+Emigrating population can be defined as the population that is leaving their native country and is moving into a new country. The reasons and motive for such outflows can be several, including employment opportunities, political conflicts, refugees, and so on. The datasets we are using in this project do not have comprehensive information to study the actual reasons behind the migrations, but we will later look into employment opportunities in countries that receive highest number of emigrants. Other reasons can also be empirically implied based on the conditions at the time of migration in their former countries. For instance, we can expect a bigger number of people leaving a country with ongoing war or political conflicts or a climate disaster. First, let's see the general trend in emigrating population. The @fig-inflows shows the total number of foreign individuals arriving in a destination (for instance, United States) over time. 
 
 ```{python}
 
@@ -144,15 +144,15 @@ fig = px.choropleth(
 fig.show()
 ```
 
-This figure does not indicate where all these moving populations originate from. The figure only shows the total number of immigrants arriving at a destination in a given year. So it would be even more interesting to see where are these populations arrriving from. In @fig-2020in, for brevity and effective communication of information in a compact graph, we will focus only on the top 20 movements in 2020. 
+This figure does not indicate where all these moving populations originate from. The figure only shows the total number of immigrants arriving at a destination in a given year. So it would be even more interesting to see where these populations are arrriving from. In @fig-2020in, for brevity and effective communication of information in a compact graph, we will focus only on the top 20 movements in 2020. 
 
 ![Total Emigrating Population in 2020, both origins and destinations(arrows) indicated](top_10_migration_inflows_2020.png){#fig-2020in}
 
-The above figure shows a very interesting trend in Europe. Germany tends to be the favorite destination among many European nations (Bulgaria, Italy, Romania, Crotia, Poland). There is a large movement from Ukrain to Poland as well. Syrian populations from West Asia also migrate to Germany in huge numbers. The migration from Syria might be the cause of civil unrest within the country while other migrations within the European nations might be due to the open borders among Schengen nations. 
+The above figure shows a very interesting trend in Europe. Germany tends to be the favorite destination among many European nations (Bulgaria, Italy, Romania, Croatia, Poland). There is a large movement from Ukrain to Poland as well. The Syrian populations from West Asia also migrate to Germany in huge numbers. The migration from Syria might be the cause of civil unrest within the country while other migrations within the European nations might be due to the open borders among Schengen nations. 
 
-While European nations mostly see continental migrations, other destinations seem to have cross-continental migration. People from India are migrating to US and Canada in 2020. Populations from China also migrate into the US. Spain receives population from Morocco and Brazil while Portugal from Colombia. There are contintation migrations in other continents as well (Mexico to USA, Venezuala to Chile, China to Korea and Japan, Viet Nam to Japan), but they are not as consistent as in Europe (see @fig-flows).
+While European nations mostly see intracontinental migrations, other destinations seem to have cross-continental migration. People from India are migrating to US and Canada in 2020. Populations from China also migrate into the US. Spain receives populations from Morocco and Brazil while Portugal receives populations from Colombia. There are continental migrations in other continents as well (Mexico to USA, Venezuela to Chile, China to Korea and Japan, Viet Nam to Japan), but they are not as consistent as in Europe (see @fig-flows).
 
-Rather than just focusing in the year 2020, seeing the total inflows over time might be better to see the trend. The aggregate is calculated for the top 10 moving population from 2000-2020 and is visualized with their origin and destination countries in the @fig-topmeans.
+Rather than just focusing in the year 2020, seeing the total inflows over time might be better to see the trend. The aggregate is calculated for the top 10 moving populations from 2000-2020 and is visualized with their origin and destination countries in the @fig-topmeans.
 
 ```{python}
 #| label: fig-topmeans
@@ -193,13 +193,13 @@ fig.show()
 
 
 
-As the figure suggests, Germany and US are the top destinations for many migrating populations. As was seen in 2020, the top moving populations are very similar on average in 2000-2022 time period. So it can be assumed the dynamics between these countries will continue in the future as well, disregarding any unprecendented events like wars or changes in policies.
+As the figure suggests, Germany and US are the top destinations for many migrating populations. As was seen in 2020, the top moving populations are very similar on average from 2000-2022 time period. So it can be assumed that the dynamics between these countries will continue in the future as well, disregarding any unprecedented events like wars or changes in policies.
 
 :::{.callout-caution}
-It is important to take all the conclusions made based on the `total number` with caution. A small country from where 60% of native population are leaving can still have less migrants in number compared to a country with bigger population from where only 5% of its total population are moving. The former case is more alarming even if fewer people are migrating. So studying in terms of more representative measures (ratio of the total population) will be more scientific. 
+It is important to take all the conclusions made based on the `total number` with caution. A small country from where 60% of the native population are leaving can still have fewer migrants in number compared to a country with a larger population from where only 5% of its total population are moving. The former case is more alarming even if fewer people are migrating. So studying in terms of more representative measures (such as ratio of the total population) will be more scientific. 
 :::
 
-At this point, after exploring the top emigrating populations and destinations, we might assume that the total migration into these destination have increased over time. So it might a good idea to test our intuitive  assumption about the change in emigrating population overtime in top destionations. The change in total inflows is depicted for United States, Korea, Japan, Germany, Italy, and Canada in @fig-overtime.
+At this point, after exploring the top emigrating populations and destinations, we might assume that the total migration into these destination have increased over time. So it might be a good idea to test our intuitive  assumption about the change in emigrating population over time in top destinations. The change in total inflows is depicted for the United States, Korea, Japan, Germany, Italy, and Canada in @fig-overtime.
 
 ```{python}
 #| label: fig-overtime
@@ -237,12 +237,12 @@ plt.show()
 ```
 
 
-As shown in figure @fig-overtime, there is no stark differences in total inflows over time among these countries expect in Germany. During 2015, there is a large inflows of foreign population compared to the previous years. According to a research, this was attributed to European refugee crisis "when the flow of migrants increased dramatically from 153,000 in 2008 to more than 1 million in 2015. This was mainly due to the growing number of Syrians, Iraqis, Libyans, Afghans and Eritreans fleeing war, ethnic conflict or economic hardship" (@peters2023). 
+As shown in @fig-overtime, there is no stark differences in total inflows over time among these countries expect in Germany. During 2015, there was a large inflow of foreign population compared to the previous years. According to a research, this was attributed to the European refugee crisis "when the flow of migrants increased dramatically from 153,000 in 2008 to more than 1 million in 2015. This was mainly due to the growing number of Syrians, Iraqis, Libyans, Afghans and Eritreans fleeing war, ethnic conflict or economic hardship" (@peters2023). 
 
 
 #### Naturalization
 
-When we talk about the emigrating populations, naturalization is also part of a conversation. **Naturalization is a process by wich a non-national citizen acquires the nationality of a certain country.** The tendency to seek nationality in a country can have personal motives but it also can be reflective of the conditions in migrants' birth countries. For instance, migrants fleeing wars, ethnic discrimination, and climate disasters will likely seek permanent settlements in their new destinations. There are two players in this dynamics: the country granting citizenship and the country to which migrants belong to.  The @fig-granting shows the top five countries granting nationality over time. We have line graphs for eight countries, which means that five of these eight countries are the top five grantees of nationality in any given year from 2000-2022.
+When we talk about the emigrating populations, naturalization is also part of the conversation. **Naturalization is a process by wich a non-national citizen acquires the nationality of a certain country.** The tendency to seek nationality in a country can have personal motives but it also can be reflective of the conditions in migrants' birth countries. For instance, migrants fleeing wars, ethnic discrimination, and climate disasters will likely seek permanent settlements in their new destinations. There are two players in this dynamics: the country granting citizenship and the country to which migrants belong to.  The @fig-granting shows the top five countries granting nationality over time. We have line graphs for eight countries, which means that the top five grantees of nationality in any given year from 2000-2022 are among these eight countries.
 
 ```{python}
 #| label: fig-granting
@@ -271,7 +271,7 @@ fig.update_yaxes(title_text='Total Acquisition of Nationality')
 fig.show()
 ```
 
-It can be seen in the figure that there are no drastic changes in the trend of naturalization among non-native populations except in US. For instance, in 2003, the total numbers of naturalization falls compared to 2002. Similarly, the rate increase from 2007 to 2008 and decreases from 2008-2010. Rather than just highlighting the trend of naturalization over time, it also begs attention to see which population are seeking naturalization in a given year. Due to constraints in space and time, this blog only explores it for a single year. The @fig-seeking studies this for the year 2021.
+It can be seen in the figure that there are no drastic changes in the trend of naturalization among non-native populations except in the US. For instance, in 2003, the total number of naturalization falls compared to 2002. Similarly, the rate increases from 2007 to 2008 and decreases from 2008-2010. Rather than just highlighting the trend of naturalization over time, it also begs attention to see which population are seeking naturalization in a given year. Due to constraints in space and time, this blog only explores this for a single year. The @fig-seeking studies this for the year 2021.
 
 
 ```{python}
@@ -288,7 +288,7 @@ fig.show()
 ```
 
 
-@fig-seeking shows the top 10 non-native populations seeking nationality in different destinations. Multiple nationalites including India, China, Mexico, Phillipines, Cuba, and Dominican Republic seek naturalization in US. Other destinations do not have multiple, large non-native populations seeking nationality. Syrian migrants were on of the top 10 populations acquiring nationality, and they were naturalized in Netherlands and Sweden. Moroccan migrants were naturalized in Spain and large number of Indian migrants also gained nationaloty in Australia in 2021. 
+@fig-seeking shows the top 10 non-native populations seeking nationality in different destinations. Multiple nationalites including India, China, Mexico, Philippines, Cuba, and Dominican Republic seek naturalization in US. Other destinations do not have multiple, large non-native populations seeking nationality. Syrian migrants were on of the top 10 populations acquiring nationality, and they were naturalized in Netherlands and Sweden. Moroccan migrants were naturalized in Spain and large number of Indian migrants also gained nationality in Australia in 2021. 
 
 :::{.callout-warning}
 The data collected for 2021 might be incomplete or even unrepresentative of the general phenomenon due to the COVID-19 pandemic. 
@@ -416,9 +416,9 @@ plot_migration_arc_diagram_mean_inflows(top_10__return)
 
 *@fig-returns-total shows the flow diagram: return of migrants from temporary residance to their birth country. The width of the flow bar is quantitative--larger bar width indicates higher return.*
 
-The overall returns shown in @fig-returns-total also verifies our previous findings that the migrations within a continent tends to have higher return rate. If the return rate is higer, we can also presume that the higher entrance rate might not be a huge burdern in a long term for a country recieving migrants.
+The overall returns shown in @fig-returns-total also verifies our previous findings that the migrations within a continent tends to have a higher return rate. If the return rate is higher, we can also presume that a higher entrance rate might not be a huge burdern in the long term for a country receiving migrants.
 
-Now, we will see the return rate over time for the countries that saw maximum returns in 2000-2020. @fig-select-returns shows the how the number of native population returning changes for some such countries over the years. 
+Now, we will see the return rate over time for the countries that saw the maximum returns in 2000-2020. @fig-select-returns shows the how the number of native population returning changes for some such countries over the years. 
 
 ```{python}
 #| label: fig-select-returns
@@ -448,7 +448,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-Some of the countries we studied tend to have increasing return populations (China, Romania, and Poland) while other countries (India, Mexico, and Italy) did not show any significant changes in the number of returning populations. The countries with higher return rate have higer immigration rate, but these populations emigrated to nearby locations. Similar cultures, smaller distances, or improvements over time in the birth country can be easing such back-and-forth movements among these migrating populations.
+Some of the countries we studied tend to have increasing return populations (China, Romania, and Poland) while other countries (India, Mexico, and Italy) did not show any significant changes in the number of returning populations. The countries with higher return rate have higher immigration rate, but these populations emigrated to nearby locations. Similar cultures, smaller distances, or improvements over time within the birth country can ease such back-and-forth movements among these migrating populations.
 
 ::: {.callout-warning}
 The returning pupulation around 2020 falls to 0 for all the countries. This is most likely inconsistency in record keeping during the COVID-19 or due to the travel restrictions of that time.
@@ -460,7 +460,7 @@ The returning pupulation around 2020 falls to 0 for all the countries. This is m
 
 One of the reasons that can explain migration is the lack of employment opportunities in the birth countries of migrating populations. So migrating populations seek employment overseas. Without being employed, on the other hand, it might not be possible for an individual to survive in a new economy too. @fig-fbemployment shows the employment rate among non-native population based on their education level.
 
-@fig-fbemployment-1 shows the employment rate is more among highly-educated foreign-born populations compared to moderatly or low-educated poupulations. The ordered employment rate among foreign-born populations based on their education level makes sense. Although we don't have data to explore in this blog, there has been research indicating that the migrating populations on average don't tend to impact the overall literacy rate of the places in which they are moving. Educated migrants compensates for the uneducated.
+@fig-fbemployment-1 shows the employment rate is higher among highly-educated foreign-born populations compared to moderatly or low-educated poupulations. The ordered employment rate among foreign-born populations based on their education level makes sense. Although we don't have data to explore in this blog, there has been research indicating that the migrating populations on average don't tend to impact the overall literacy rate of the places in which they are moving. Educated migrants compensate for the uneducated.
 
 ```{python}
 #| label: fig-fbemployment
@@ -534,7 +534,7 @@ plt.legend()
 plt.show()
 ```
 
- @fig-fbemployment-2 shows that the employment rate is more among male populations than the female counterparts. Some argues that employers prey on migrants and use them as low-wage workers while others argue that the migrants tolerate toxic behaviors in workplaces, decreasing the overall moral standards in the work environments. I will say why not point figers out to the overall ecnomic incentives, both rewards and punishments, of locations in question that allow such tendencies. Such issues are the serious violations of human rights and morality and has to be further investigated.
+@fig-fbemployment-2 shows that the employment rate is higher among male populations than the female counterparts. Some argues that employers prey on migrants and use them as low-wage workers while others argue that the migrants tolerate toxic behaviors in workplaces, decreasing the overall moral standards in the work environments. I will say why not point fingers out to the overall economic incentives, both rewards and punishments, of locations in question that allow such tendencies. Such issues are serious violations of human rights and morality and have to be further investigated.
 
 
 #### Remittance
@@ -542,7 +542,7 @@ plt.show()
 One of the often overlooked characteristics of migration is remittance. While employment opportunities are what tie the immigrants to their destinations, remittance is what ties them still to their brith nations.
 Remittance, as mentioned earlier, is defined as the sum of money sent by a person working abroad back to their birth country.
 
-The @fig-remit10 shows the top 10 nations recieving money from their citizens working abroad. This is consistent with emigrating populations we explored above. India, Mexico, Philippines, and China were top moving populations during 2000-2020 as shown in @fig-topmeans.
+@fig-remit10 shows the top 10 nations recieving money from their citizens working abroad. This is consistent with emigrating populations we explored above. India, Mexico, Philippines, and China were the top moving populations during 2000-2020 as shown in @fig-topmeans.
 
 ```{python}
 
@@ -590,7 +590,7 @@ plt.tight_layout()
 plt.show()
 ```
 
-Just because a country is receiving huge sum of money as a remittance does not necessarily mean that the country is relying in remittance. Some countries have larger economies and populations where even the huge remittance does not contribute much to the whole. One of such factor to account for the contribution to the economy of a country is to look at how much remittance contributed towards the GDP of a given year. There might be countries which are much more dependent on the remittance even though they don't have much populations working abroad as shown in @fig-remdep.
+Just because a country is receiving a huge sum of money as a remittances does not necessarily mean that the country is relying on remittance. Some countries have larger economies and populations where even a huge remittance does not contribute much to the whole. One such factor to account for the contribution to the economy of a country is to examine how much remittance contributed towards the GDP of a given year. There might be countries which are much more dependent on the remittances even though they don't have much populations working abroad as shown in @fig-remdep.
 
 ```{python}
 #| label: fig-remdep
@@ -611,11 +611,8 @@ plt.show()
 
 @fig-remdep shows the countries hugely relying on remittance for their GDP for the fiscal year 2023. We see countries like Tajikstan, Samoa, and Nepal from where we did not see large exits in the above sections. 
 
-:::{.callout-caution}
-So it is important to take all the conclusions made based on the `total number` with caution. A small country from where 60% of native population are leaving can still have less migrants in number compared to a country with bigger population from where only 5% of its total population are moving. The former case is more alarming even if fewer people are migrating. So studying in terms of more representative measures (ratio of the total population) will be more scientific. 
-:::
 
-### Sentiments
+### Decoding Sentiments Related to Migrations
 
 For the sentimental analysis, texts were extracted from few selected PDF files @tip-articles. The NTLK library tokenizes the text, and uses the NRC Emotion Lexicon to identify and count the emotions associated with the tokenized words in the text. The sentiment scores across multiple PDFs were aggregated and visualized the overall sentiment distribution in the @fig-sentiment
 
@@ -630,7 +627,7 @@ This pie chart provides an overview of the emotional landscape surrounding the t
 :::{.callout-caution}
 It is limited by the choices of article and is a subjective analysis.
 ::: 
-The chart shows that 28.8% of the sentiments reflects positive sentiments. The next largest sentiment is trust, 14.4%. The percentages for negative sentiments (12.6%) is quite low compared to the positive sentiments which is surprising given the negativities surrounding migration in every day news.
+The chart shows that 28.8% of the sentiments reflect positive sentiments. The next largest sentiment is trust, at 14.4%. The percentages for negative sentiments (12.6%) is quite low compared to the positive sentiments--which is surprising given the negativities surrounding migration in everyday news.
 
 
 In addition to the sentimental analysis, @fig-worded showcases various concepts and themes related to migration. 
@@ -655,9 +652,9 @@ This word cloud provides an overview of the diverse topics and concepts interlin
 * [International Migration 2020 Highlights](https://www.un.org/development/desa/pd/sites/www.un.org.development.desa.pd/files/undesa_pd_2020_international_migration_highlights.pdf)
 :::
 
-### Differences in Migrations across years and Countries 
+### Clustering the Differences in Migrations across Years and Countries 
 
-It was very interesting to see the overall trend since 2000 in migration patterns in the above sections. It would further be interesting to analyze if there are certain years or countries that shares the same pattern on how people move. For this K-means clustering was used from scikit-learn library. It was figured out that the four clusters tend to account the overall variability in the number of moving populations: clusters that achieve lower differences in observations within the same clusters but maintain higher inter-cluster distances.
+It was very interesting to see the overall trend since 2000 in migration patterns in the above sections. It would also be interesting to analyze if there are certain years or countries that share the same pattern of how people move. For this K-means clustering was used from scikit-learn library. It was figured out that the four clusters tend to account for the overall variability in the number of moving populations: clusters that achieve lower differences in observations within the same clusters but maintain higher inter-cluster distances.
 
 ```{python}
 #| label: fig-kmeans
@@ -713,16 +710,16 @@ plt.title('K-means Clusters of Countries')
 plt.show()
 ```
 
-@fig-kmeans shows almost consistent patterns in migrating populations throughout the years. Cluster 0 to CLuster 3 are odered in ascending order, indicating the total number of people moving from a country to another. Years before 2005 have few observations in cluster 3, meaning there were not that many migrant groups with large number of people. From 2015-2020 there are some observations that are very different from others, even if they belong to the same cluster 3. Even if we don't see any pattern through cluster 0, 1, and 2, cluster 3 shows some patterns across years: fewer large migrations before 2005, similar large migrations in 2005-2015, and few larger migrations around 2015-2020. 
+@fig-kmeans shows almost consistent patterns in migrating populations throughout the years. Cluster 0 to Cluster 3 are odered in ascending order, indicating the total number of people moving from one country to another. Years before 2005 have few observations in Cluster 3, meaning there were not that many migrant groups with a large number of people. From 2015-2020 there are some observations that are very different from others, even if they belong to the same Cluster 3. Even if we don't see any pattern through Clusters 0, 1, and 2, Cluster 3 shows some patterns across years: fewer large migrations before 2005, similar large migrations in 2005-2015, and few larger migrations around 2015-2020. 
 
-In addition to years, we will also look at the patterns among destination countries. Note that our data only covers OECD countries as potential destinations for migrants.
+In addition to the differences over time, we will also look at the differing patterns among destination countries. Note that our data only covers OECD countries as potential destinations for migrants.
 
 ```{python}
 #| label: fig-kmeans_country
 #| fig-cap: "Observations grouped in K-means Clusters for destinations"
 
 # doing the figure for destinations
-plt.figure(figsize=(9, 18))
+plt.figure(figsize=(8, 18))
 scatter = plt.scatter(df['Value'], df['Country'], c=df['cluster_label'])
 
 unique_labels = np.unique(df['cluster_label'])
@@ -747,7 +744,7 @@ plt.title('K-means Clusters of Countries')
 plt.show()
 ```
 
-@fig-kmeans_country shows different countries have differing movements over time. Only few countries have observations in cluster 3 which represents largest moving populations. We can look into the clusters that classifiy the inflows in different countries.
+@fig-kmeans_country shows different countries have differing movements over time. Only a few countries have observations in Cluster 3 which represents the largest moving populations. We can examine the clusters that classify the inflows in different countries.
 
 ```{python}
 # prints destinations present in a cluster
@@ -756,12 +753,12 @@ for cluster in df['cluster_label'].unique():
     print(df[df['cluster_label'] == cluster]['Country'].unique().tolist()) # return as a list
 ```
 
-Only `'Japan', 'Korea', 'Canada', 'United States', 'Germany', 'Italy', 'Spain', 'Poland', and 'Chile'` are in cluster 3. This is consistent with our findings in earlier sections. These countries tend to be the top destinations for migrants. In addition, in @fig-kmeans we saw that after 2015, there were big movements for some countries. From @fig-kmeans_country, it can be deduced that Germany and United States can be the countries that have largest inflows. These two figures can be coupled to study the patterns of moving populations across years and destinations.
+Only `'Japan', 'Korea', 'Canada', 'United States', 'Germany', 'Italy', 'Spain', 'Poland', and 'Chile'` are in the Cluster 3. This is consistent with our findings in earlier sections. These countries tend to be the top destinations for migrants. In addition, in @fig-kmeans we observed that after 2015, there were big movements in some countries. From @fig-kmeans_country, it can be deduced that Germany and the United States may be the countries that have the largest inflows. These two figures can be coupled to study the patterns of migrations across years and destinations.
 
 
 ### Schengen vs Non-Schengen: An Analysis of differing philosophies in human mobility
 
-It is important to understand how migration trends differ from one country to another, or from one region to another. In this section we examine the complexity of migration trends and clarify the implications of policies related to human mobility. We will analyze the different views on migration trends between Schengen countries with borderless travel among participating European nations and control nations with more conventional immigration policy. We wily only use a subset of five non-schengen countries--'Australia', 'Canada', 'Japan', 'New Zealand', 'United States'--and five schengen countries--'Germany', 'France', 'Greece', 'Spain', 'Italy'. 
+It is important to understand how migration trends differ from one country to another, or from one region to another. In this section we examine the complexity of migration trends and clarify the implications of policies related to human mobility. We will analyze the different views on migration trends between Schengen countries with borderless travel among participating European nations and control nations with more conventional immigration policy. We will only use a subset of five non-schengen countries--'Australia', 'Canada', 'Japan', 'New Zealand', 'United States'--and five schengen countries--'Germany', 'France', 'Greece', 'Spain', 'Italy'. 
 
 ```{python}
 #| label: fig-schen
@@ -827,7 +824,7 @@ ax.set_title('Total Inflows of Foreign Population in selected Schengen and non-S
 plt.show()
 ```
 
-We shown in @fig-schen, throughout the years, there is not much differences in inflows of foreign population among the selected schengen and non-schengen countries. From previous sections, we can say Germany is the schengen country with largest migrations around 2015. The non-schengen country with slightly lower inflowing population to that of Germany is probably United States. Next we will explore the return of non-native population from these two groups.
+As shown in @fig-schen, throughout the years, there are not much differences in inflows of foreign population among the selected Schengen and non-Schengen countries. From previous sections, we can say Germany is the Schengen country with the largest migrations around 2015. The non-schengen country with a slightly lower inflowing population than that of Germany is probably the United States. Next we will explore the return of non-native population from these two groups.
 
 
 ```{python}
@@ -858,7 +855,7 @@ ax.set_title('Outflows of foreign population in Selected Schengen and non-Scheng
 plt.show()
 ```
 
-@fig-schen_out shows some pattern in the return of non-native populations between schengen and non-schengen countries. There tend to be more return from multiple schengen countries. We have seen multiple larger return from schengen countries in @fig-returns-total as well. This can have multiple explanations. Schengen countries tend to get more migrants from other schengen countries while countries like US and Canada tend to have inter-continental migrants. These sort of migration patterns can also explain the mindsets of migrants when it comes to returning to their birth countries. 
+@fig-schen_out shows some patterns in the return of non-native populations between Schengen and non-Schengen countries. There tends to be more returns from multiple Schengen countries. We have seen multiple larger returns from Schengen countries in @fig-returns-total as well. This can have multiple explanations. Schengen countries tend to get more migrants from other Schengen countries while countries like the US and Canada tend to have inter-continental migrants. These kinds of migration patterns can also explain the mindsets of migrants when it comes to returning to their birth countries. 
 
 # Conclusions
 
