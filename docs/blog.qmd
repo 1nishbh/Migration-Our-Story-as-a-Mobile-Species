@@ -621,7 +621,12 @@ For the sentimental analysis, texts were extracted from few selected PDF files @
 
 ![Distribution of Sentiments in the Selected Articles](sentimental_disstribution%20copy.png){#fig-sentiment}
 
+::: {.callout-note}
+This sentiment analysis was adapted from @K_2023. The code can be found at [/src/sentiment_analysis.ipynb](https://github.com/nishbh01/Migration-Our-Story-as-a-Mobile-Species/blob/main/src/sentiment_analysis.ipynb).
+:::
+
 This pie chart provides an overview of the emotional landscape surrounding the topic of migration. 
+
 :::{.callout-caution}
 It is limited by the choices of article and is a subjective analysis.
 ::: 
