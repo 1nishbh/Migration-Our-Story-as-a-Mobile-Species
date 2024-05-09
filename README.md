@@ -5,6 +5,9 @@ This repository contains a collection of Jupyter Notebooks for analyzing various
 
 **Check out the blog here:** [Where Are We Going?](https://nishbh01.github.io/Migration-Our-Story-as-a-Mobile-Species/blog.html)
 
+> All the codes used for figures are included in the blog except for the figures in `Sentiments` section. 
+> For the code deployed to obtain the figures for this section, go to `src/sentiment_analysis.ipynb` 
+
 
 ## Project Overview
 The project aims to provide a comprehensive set of tools and analyses for understanding migration patterns, employment trends, sentiment towards migration, and other related topics.
@@ -22,7 +25,7 @@ git clone https://github.com/nishbh01/Migration-Our-Story-as-a-Mobile-Species.gi
 
 2. Navigate to the project directory:
 ```
-cd migration-data-analysis
+cd Migration-Our-Story-as-a-Mobile-Species
 ```
 or open mannually in your editor. 
 
@@ -49,7 +52,7 @@ Each Jupyter Notebook in this repository serves a different purpose. You can exp
 
     - schengen_compared.ipynb: Notebook for comparing migration data in the subset of Schengen and non-Schengen OECD countries.
 
-    - sentimental_analysis.ipynb: Notebook for performing sentiment analysis on migration-related text data.
+    - **sentiment_analysis.ipynb: Notebook for performing sentiment analysis on migration-related text data.**
 
 
 - environment.yml: File for managing the project's environment and dependencies.
