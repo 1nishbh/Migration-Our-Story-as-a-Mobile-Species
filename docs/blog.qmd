@@ -14,7 +14,8 @@ format:
 jupyter: python3
 ---
 
-![Photograph: Zakir Hossain Chowdhury / Barcro](https://u4d2z7k9.rocketcdn.me/wp-content/uploads/2019/02/villagers-dried-river-bed.jpg){fig-alt="Villagers on dried river bed in Satkhira, Bangladesh." width="100%"}
+![Photograph: Zakir Hossain Chowdhury / Getty Images](villagers_migrating_bangladesh.jpg){#fig-general}
+
 
 Haven't we all thought about moving to another location during several occasions in our lives? Probably, more than once. May be we got a better job offer in another city or a country. Maybe our country is devasted by wars and ethnic conflicts, and we don't feel safe in its territory. Maybe our place faced severe climatic conditions, and there remained no means to sustain life. For one reason or another, humans have been moving across the globe. Our ancestors moved around engaging in business, seeking favorable climatic conditions, waging wars, and building settlements. 
 
